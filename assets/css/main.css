@@ -23,7 +23,8 @@ section, summary, time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
 	font: inherit;
-	vertical-align: baseline;}
+	vertical-align: baseline;
+}
 
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -2185,6 +2186,7 @@ input, select, textarea {
 		list-style: none;
 		margin-left: -1em;
 		padding-left: 0;
+
 	}
 
 		ul.actions li {
@@ -2413,7 +2415,7 @@ input, select, textarea {
 		-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		background-color: transparent;
-		border-radius: 3px;
+		border-radius: 20px;
 		border: 0;
 		box-shadow: inset 0 0 0 2px #fff;
 		color: #fff;
@@ -2432,6 +2434,12 @@ input, select, textarea {
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		
+		
+	}
+
+	.button.centered{
+		margin-left:  39.5%;
 	}
 
 		input[type="submit"]:hover,
@@ -3561,7 +3569,7 @@ input, select, textarea {
 				opacity: 0;
 			}
 
-/* Banner */
+/* BannerBanner */
 
 	#banner {
 		display: -moz-flex;
@@ -3666,6 +3674,7 @@ input, select, textarea {
 			text-transform: uppercase;
 			width: 16em;
 			z-index: 1;
+			margin-bottom: 1%;
 		}
 
 			#banner .more:after {
@@ -3723,7 +3732,6 @@ input, select, textarea {
 				#banner .more {
 					display: none;
 				}
-
 		}
 
 	body.is-preload #banner h2 {
@@ -3974,6 +3982,7 @@ input, select, textarea {
 		background-size: cover;
 		padding-top: 0;
 	}
+
 
 	body.landing #footer {
 		background-color: rgba(29, 36, 42, 0.9);
