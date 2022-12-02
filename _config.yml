@@ -13,7 +13,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: FrancescObrador
+title: FObrador
 email: obrador.francesc@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Francesc Obrador's portfolio.
@@ -27,14 +27,21 @@ markdown: kramdown
 remote_theme: mmistakes/minimal-mistakes
 # Outputting
 permalink: /:categories/:title/
-paginate: 5 # amount of posts to show
+paginate: 4 # amount of posts to show
 paginate_path: /page:num/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 github: [metadata]
-logo: /assets/images/photo.jpg
+logo: /assets/favicon_io/favicon-32x32.png
+
+collections:
+  portfolio:
+    output: true
+    permalink: /:collection/:path/
+
 
 include:
   - _pages
+  - _includes
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
@@ -60,7 +67,7 @@ plugins:
 author:
   name   : "Francesc Obrador"
   avatar : "/assets/images/photo.jpg"
-  bio    : "..."
+  bio    : "Unity and Unreal Engine game developer"
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
@@ -86,7 +93,7 @@ defaults:
     values:
       layout: single
       author_profile: true
-      read_time: true
+      read_time: false
       comments: true
       share: true
       related: true
@@ -97,6 +104,14 @@ defaults:
     values:
       layout: single
       author_profile: true
+  # _portfolio
+  - scope:
+      path: ""
+      type: portfolio
+    values:
+      layout: single
+      author_profile: false
+      share: true
 
 category_archive:
   type: liquid
