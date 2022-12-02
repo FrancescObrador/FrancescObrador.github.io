@@ -1,10 +1,9 @@
 ---
 title: "Dual might"
 #date: 2019-06-22
-excerpt: ""
+excerpt: "Game programmer and game designer"
 header:
   teaser: /assets/images/DualMight.jpg
-  overlay_image: /assets/images/DualMight.jpg
 sidebar:
   - title: "Role"
     text: "Game desinger & Unity Developer"
@@ -20,13 +19,5 @@ sidebar:
   
   - title: "Tools Used"
     text: "Unity, Git Kraken"
- 
-  - title: "Responsibilities"
-    text: "Reuters try PR stupid commenters should isn't a business model"
----
 ---
 First-year university project. Here I learned the truth about games development.
-
-- 3-members group.
-- 5-month development.
-- Game designer and gameplay programmer.

@@ -1,6 +1,7 @@
 ---
 title: "Treasure keeper"
 #date: 2020-07-07
+excerpt: "Game programmer and game designer"
 header:
   teaser: assets/images/TreasureKeeper.gif
 sidebar:
@@ -12,10 +13,7 @@ sidebar:
   
   - title: "Tools Used"
     text: "Unity"
- 
-  - title: "Responsibilities"
-    text: "Reuters try PR stupid commenters should isn't a business model"
----
+
 ---
 Self-published Idle clicker developed with Unity for Android.
 

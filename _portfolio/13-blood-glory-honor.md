@@ -1,6 +1,7 @@
 ---
 title: "Blood, glory & honor"
 #date: 2022-06-22
+excerpt: "Game programmer and producer"
 header:
   teaser: /assets/images/bgh/bgh_01.jpg
 sidebar:
@@ -18,9 +19,6 @@ sidebar:
   
   - title: "Tools Used"
     text: "Unity, Yarn Spinner, Google Sheets, Git Kraken"
- 
-  - title: "Responsibilities"
-    text: "Reuters try PR stupid commenters should isn't a business model"
 ---
 
 Last year university degree project. [Blood, Glory & Honor][bgh] is a gritty, Medieval Turn-Based Strategy game. 

@@ -1,6 +1,7 @@
 ---
-title: "Republican Mice"
+title: "Republican mice"
 #date: 2020-04-20
+excerpt: "Level designer"
 header:
   teaser: /assets/images/RepublicanMice.png
 sidebar:
@@ -9,10 +10,6 @@ sidebar:
 
   - title: "Team Size"
     text: "4"
- 
-  - title: "Responsibilities"
-    text: "Reuters try PR stupid commenters should isn't a business model"
----
 ---
 A Level Design Document (LDD) where we documented all the process of design and implementation of a level in Unreal Engine. 
 
