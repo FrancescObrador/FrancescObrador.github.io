@@ -1,23 +1,25 @@
 ---
-title: "Excitebike remake"
+title: "Excitebike Remake"
 #date: 2020-10-06
-excerpt: "Game programmer"
+excerpt: "Programmer"
 header:
   teaser: /assets/images/excitebike.gif
+  overlay_image: /assets/images/excitebike.gif
+  overlay_filter: 0.25
+  actions:
+    - label: "itch.io"
+      url: "https://francescobrador.itch.io/excitebike-remake"
+
 sidebar:
   - title: "Role"
-    text: "Developer"
-  
+    text: "Programmer"
   - title: "Genre"
     text: "Racing"
-
   - title: "Development time"
     text: "2 months"
-   
-  - title: "Team Size"
+  - title: "Team size"
     text: "3"
-  
-  - title: "Tools Used"
+  - title: "Tools"
     text: "Phaser"
 ---
 Remake of a Retro game as a university project. The goal of the project was to learn the Scrum workflow. 
