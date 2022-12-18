@@ -3,16 +3,16 @@ title: "Egea"
 #date: 2022-06-22
 excerpt: "Programmer and designer"
 header:
-  teaser: /assets/images/egea.jpg
-  overlay_image: /assets/images/egea.jpg
+  teaser: /assets/images/egea.webp
+  overlay_image: /assets/images/egea.webp
   overlay_filter: 0.25
   actions:
     - label: "itch.io"
       url: "https://francescobrador.itch.io/egea"
 
 gallery:
-  - url: /assets/images/egea.jpg
-    image_path: /assets/images/egea.jpg
+  - url: /assets/images/egea.webp
+    image_path: /assets/images/egea.webp
     title: ""
 
 sidebar:

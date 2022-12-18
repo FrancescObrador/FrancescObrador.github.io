@@ -13,13 +13,10 @@ header:
 gallery:
   - url: /assets/images/mofletes/mofletes_01.jpeg
     image_path: /assets/images/mofletes/mofletes_01.jpeg
-    title: "Multiplayer map."
   - url: /assets/images/mofletes/mofletes_02.jpeg
     image_path: /assets/images/mofletes/mofletes_02.jpeg
-    title: "Story mode."
   - url: /assets/images/mofletes/mofletes_03.jpeg
     image_path: /assets/images/mofletes/mofletes_03.jpeg
-    title: "Character selection menu."
 
 sidebar:
   - title: "Role"
@@ -37,7 +34,7 @@ Third-year university project. Acorn Islands is a 3D-Platformer game built aroun
 
 {% include gallery caption="Captures from gameplay." %}
 
-## Responsabilities
+## Responsibilities
 - One of the members defining the core game mechanics.
 - Planning and estimating tasks for Sprints.
 - Scripting elements behaviours of the game.

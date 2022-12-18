@@ -3,8 +3,8 @@ title: "Dual Might"
 #date: 2019-06-22
 excerpt: "Programmer and designer"
 header:
-  teaser: /assets/images/DualMight.jpg
-  overlay_image: /assets/images/DualMight.jpg
+  teaser: /assets/images/DualMight.webp
+  overlay_image: /assets/images/DualMight.webp
   overlay_filter: 0.25
   actions:
     - label: "itch.io"

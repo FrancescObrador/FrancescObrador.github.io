@@ -3,22 +3,22 @@ title: "Blood, Glory & Honor"
 #date: 2022-06-22
 excerpt: "Programmer and producer"
 header:
-  teaser: /assets/images/bgh/bgh_01.jpg
-  overlay_image: /assets/images/bgh/bgh_01.jpg
+  teaser: /assets/images/bgh/bgh_01.webp
+  overlay_image: /assets/images/bgh/bgh_01.webp
   overlay_filter: 0.25
   actions:
     - label: "itch.io"
       url: "https://arnautarrago.itch.io/blood-glory-honor"
 
 gallery:
-  - url: /assets/images/bgh/bgh_02.png
-    image_path: /assets/images/bgh/bgh_02.png
+  - url: /assets/images/bgh/bgh_02.webp
+    image_path: /assets/images/bgh/bgh_02.webp
     title: "Multiplayer map."
-  - url: /assets/images/bgh/bgh_03.png
-    image_path: /assets/images/bgh/bgh_03.png
+  - url: /assets/images/bgh/bgh_03.webp
+    image_path: /assets/images/bgh/bgh_03.webp
     title: "Story mode."
-  - url: /assets/images/bgh/bgh_04.png
-    image_path: /assets/images/bgh/bgh_04.png
+  - url: /assets/images/bgh/bgh_04.webp
+    image_path: /assets/images/bgh/bgh_04.webp
     title: "Character selection menu."
 
 sidebar:
@@ -40,7 +40,7 @@ Last year university degree project. [Blood, Glory & Honor][bgh] is a gritty, Me
 
 We formed a multidisciplinary team where I worked closely with artists (3D and 2D artists and musicians). My role was to plan, manage and develop the project as a Vertical Slice with my university mates.
 
-## Responsabilities
+## Responsibilities
 - Colaborate on define the core game mechanics.
 - Planning and estimating tasks.
 - Dialogue system & hints system development.

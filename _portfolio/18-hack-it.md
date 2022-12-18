@@ -26,7 +26,7 @@ Second-year university project. Hack it! is 2-players puzzles game for android m
 
 I managed the development flow and worked as game designer and C# programmer.
 
-## Responsabilities
+## Responsibilities
 - One of the members defining the core game mechanics
 - Manage the team tasks
 - Scripting elements behaviours of the game

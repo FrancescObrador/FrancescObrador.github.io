@@ -3,8 +3,8 @@ title: "Republican Mice"
 #date: 2020-04-20
 excerpt: "Level designer"
 header:
-  teaser: /assets/images/RepublicanMice.png
-  overlay_image: /assets/images/RepublicanMice.png
+  teaser: /assets/images/RepublicanMice.webp
+  overlay_image: /assets/images/RepublicanMice.webp
   overlay_filter: 0.25
 
 sidebar:
