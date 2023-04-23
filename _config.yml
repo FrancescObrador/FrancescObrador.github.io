@@ -67,7 +67,7 @@ plugins:
 author:
   name   : "Francesc Obrador"
   avatar : "/assets/images/photo.webp"
-  bio    : "Unity and Unreal Engine game developer currently working at The Breach Studios."
+  bio    : "Unity and Unreal game developer currently working at The Breach Studios."
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
