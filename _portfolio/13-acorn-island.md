@@ -20,7 +20,7 @@ gallery:
 
 sidebar:
   - title: "Role"
-    text: "Gameplay programmer& narrative and level designer"
+    text: "Gameplay programmer & narrative and level designer"
   - title: "Genre"
     text: "Casual, 3D Platformer"
   - title: "Development time"

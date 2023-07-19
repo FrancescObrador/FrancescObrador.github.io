@@ -12,9 +12,10 @@ header:
 
 sidebar:
   - title: "Role"
-    text: "Unreal Game programmer"
+    text: "Unreal programmer"
   - title: "Genre"
     text: "Class-based shooter"
 ---
+A new take on Hero Shooters! Fight along with your teammates from different civilizations against other players to take control of the universe's essence.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/IW0kVUOmUQ4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
