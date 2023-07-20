@@ -3,8 +3,8 @@ title: "Project ST"
 #date: 2022-06-22
 excerpt: "Unreal Programmer"
 header:
-  teaser: /assets/images/projectst/chaos_projectST.png
-  overlay_image: /assets/images/projectst/ST_hiro_launched.png
+  teaser: /assets/images/projectst/chaos_projectST.webp
+  overlay_image: /assets/images/projectst/ST_hiro_launched.webp
   overlay_filter: 0.25
   actions:
     - label: "Web"
