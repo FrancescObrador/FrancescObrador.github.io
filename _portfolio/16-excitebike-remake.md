@@ -4,7 +4,7 @@ title: "Excitebike Remake"
 excerpt: "Programmer"
 header:
   teaser: /assets/images/excitebike.gif
-  overlay_image: /assets/images/excitebike.gif
+  overlay_image: /assets/images/excitebike.webp
   overlay_filter: 0.25
   actions:
     - label: "itch.io"
