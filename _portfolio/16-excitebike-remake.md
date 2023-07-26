@@ -3,7 +3,7 @@ title: "Excitebike Remake"
 #date: 2020-10-06
 excerpt: "Programmer"
 header:
-  teaser: /assets/images/excitebike.gif
+  teaser: /assets/images/excitebike.webp
   overlay_image: /assets/images/excitebike.webp
   overlay_filter: 0.25
   actions:
