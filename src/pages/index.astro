@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {Icon} from 'astro-icon/components'
+import Experience from '../components/Experience.astro';
+import SectionContainer from '../components/SectionContainer.astro';
+import WorkProjects from '../components/WorkProjects.astro';
+import Hero from '../components/Hero.astro';
+import AboutMe from '../components/AboutMe.astro';
+import PersonalProjects from '../components/PersonalProjects.astro';
+---
+
+<Layout title="Porfolio de Francesc Obrador - Desarrollador de Software" description='Desarrollador de Software'>
+	<main class="px-4">
+		<SectionContainer class="py-16 md:py-36">
+			<Hero>
+		</SectionContainer>
+		<div class="py-44">
+		<SectionContainer id="experience">
+			<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
+				<Icon name="items/briefcase" class="size-4 lg:size-6"/>
+				Experience
+			</h2>
+			<Experience/>
+		</SectionContainer>
+		<SectionContainer id="projects">
+			<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
+				<Icon name="items/code" class="size-4 lg:size-6"/>
+				Personal Projects
+			</h2>
+			<PersonalProjects/>
+		</SectionContainer>
+		<SectionContainer>
+			<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
+				<Icon name="items/code" class="size-4 lg:size-6"/>
+				Work Projects
+			</h2>
+			<WorkProjects/>
+		<SectionContainer id="about-me">
+			<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
+				<Icon name="items/user-heart" class="size-4 lg:size-6"/>
+				About Me
+			</h2>
+			<AboutMe/>
+		</SectionContainer>
+	</main>
+</Layout>

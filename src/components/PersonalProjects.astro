@@ -1,0 +1,38 @@
+---
+import {TAGS} from '../data/tags'
+import ProjectCard from "./ProjectCard.astro"
+
+const PROJECTS = [
+    // {
+    //     title: 'Hotel Web',
+    //     description: 'Designed and implemented a comprehensive hotel booking platform. Created a relational database, a RESTful API backend, and a user-friendly frontend for customers to view and book hotel rooms.',
+    //     link: '',
+    //     github: '',
+    //     image: '/images/mockup.png',
+    //     tags: [TAGS.angular, TAGS.css, TAGS.docker, TAGS.git, TAGS.html, TAGS.nestjs, TAGS.postgres, TAGS.tailwind, TAGS.typeorm, TAGS.typescript]
+    // },
+    {
+        title: 'Treasure Keeper',
+        description: 'Idle clicker game developed as a side project in 2021 published on the Google Play Store (now unpublished)',
+        link: '',
+        github: '',
+        image: '/images/treasure-keeper.webp',
+        tags: [TAGS.csharp, TAGS.git, TAGS.unity_dark]
+    }
+]
+---
+
+<div class="flex flex-col gap-y-16">
+    {
+      PROJECTS.map(({ image, title, description, tags, link, github }) => (
+        <ProjectCard
+          image={image}, 
+          title={title}, 
+          description={description}, 
+          tags={tags}, 
+          link={link}, 
+          github={github}
+        />      
+      ))
+    }
+</div>

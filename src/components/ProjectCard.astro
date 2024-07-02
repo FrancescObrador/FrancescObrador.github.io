@@ -1,0 +1,59 @@
+---
+import { Icon } from "astro-icon/components"
+import LinkButton from "./LinkButton.astro"
+import Image from "astro/components/Image.astro"
+
+const {image, title, description, tags, link, github} = Astro.props
+---
+
+<div class="flex flex-col">
+    {
+      <article class="flex flex-col space-x- group md:flex-row md:space-x-8 md:space-y-0">
+    <div class="w-full md:w-1/2">
+      <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 
+      transition duration-500 ease-in-out transform shadow-xl 
+      overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl 
+      lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
+        <Image width="432" height="243" alt="The Harvest in-game capture" class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105" loading="lazy" src={image} />
+      </div>
+    </div>
+  
+    <div class="w-full md:w-1/2 md:max-w-lg">
+      <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+        {title}
+      </h3>
+      <div class="flex flex-wrap mt-2">
+        <ul class="flex flex-row mb-2 gap-2 flex-wrap">
+            {tags.map((tag:any) => (
+              <li>
+                <span
+                  class={`flex items-center gap-x-3 rounded-full text-xs ${tag.class} py-1 px-3 `}
+                >
+                  <Icon name={tag.icon} class="size-6" />
+                  {tag.name}
+                </span>
+              </li>
+            ))}
+          </ul>
+  
+        <div class="mt-2 text-gray-700 dark:text-gray-400">{description}</div>
+        <footer class="flex items-end justify-start mt-4 gap-x-4">
+            {github && (
+              <LinkButton href={github}>
+                <Icon name="social/github" class="size-6" />
+                Code
+                
+              </LinkButton>
+            )}
+            {link && (
+              <LinkButton href={link}>
+                <Icon name="items/link" class="size-4" />
+                Preview
+              </LinkButton>
+            )}
+          </footer>
+      </div>
+    </div>
+  </article>
+    }
+  </div>

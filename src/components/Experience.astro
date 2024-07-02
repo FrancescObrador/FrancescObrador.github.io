@@ -1,0 +1,23 @@
+---
+import ExperienceItem from "./Experience-Item.astro"
+
+const EXPERIENCIE = [
+    {
+        date: 'November 2021 - May 2024',
+        title: 'Software Developer',
+        company: 'The Breach Studios',
+        description: 'Videogames programming with Unreal Engine/C++ and Unity/C#. Worked on The Harvest, Project ST and made Fortnite maps.',
+        link: 'https://thebreachstudios.com/'
+    },
+]
+---
+
+<ol class="relative mt-16">
+    {
+      EXPERIENCIE.map((experiencie) => (
+        <li class="">
+          <ExperienceItem {...experiencie} />
+        </li>
+      ))
+    }
+  </ol>
