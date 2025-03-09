@@ -31,8 +31,14 @@ const navItems = [
 ---
 
 <header class="fixed top-0 z-50 w-full">
-  <nav class="flex items-center justify-center px-4 py-3 mx-auto text-sm font-medium transition-all duration-300 max-w-7xl backdrop-blur-md bg-white/50 dark:bg-gray-800/30 rounded-2xl ring-1 ring-black/10 dark:ring-white/15 hover:ring-black/20 dark:hover:ring-white/30 shadow-sm hover:shadow-md">
-    <ul class="flex gap-1 p-1 rounded-xl bg-black/5 dark:bg-white/5">
+  <nav class="flex items-center justify-between px-4 py-3 mx-auto text-sm font-medium transition-all duration-300 max-w-7xl backdrop-blur-md bg-white/50 dark:bg-gray-800/30 rounded-2xl ring-1 ring-black/10 dark:ring-white/15 hover:ring-black/20 dark:hover:ring-white/30 shadow-sm hover:shadow-md">
+    <!-- Logo o nombre del sitio -->
+    <div class="text-lg font-semibold">
+     FrancescObrador.dev
+    </div>
+
+    <!-- Menú para pantallas grandes -->
+    <ul class="hidden md:flex gap-1 p-1 rounded-xl bg-black/5 dark:bg-white/5">
       {navItems.map((link) => (
         <li>
           <LinkInline
@@ -60,7 +66,48 @@ const navItems = [
         </button>
       </li>
     </ul>
+
+    <!-- Botón de menú para móviles -->
+    <button
+      id="mobile-menu-button"
+      class="md:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+      aria-label="Abrir menú"
+    >
+      <Icon name="heroicons:bars-3" class="w-6 h-6" />
+    </button>
   </nav>
+
+  <!-- Menú desplegable para móviles -->
+  <div id="mobile-menu" class="md:hidden fixed top-16 left-0 right-0 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg opacity-0 invisible transition-all transform -translate-y-5">
+    <ul class="flex flex-col gap-2">
+      {navItems.map((link) => (
+        <li>
+          <LinkInline
+            href={link.url}
+            class="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors hover:bg-black/5 dark:hover:bg-white/5 [&.active]:bg-blue-500/10 [&.active]:text-blue-600 dark:[&.active]:text-blue-400"
+            aria-label={link.label}
+            data-section={link.label}
+          >
+            <Icon name={link.icon} class="w-4 h-4" />
+            <span>{link.title}</span>
+          </LinkInline>
+        </li>
+      ))}
+      
+      <!-- Toggle de Tema en móviles -->
+      <li>
+        <button
+          id="theme-toggle-mobile"
+          class="flex items-center justify-center w-full px-4 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+          aria-label="Toggle dark mode"
+        >
+          <Icon name="heroicons:sun" class="w-5 h-5 dark:hidden text-yellow-500" />
+          <Icon name="heroicons:moon" class="w-5 h-5 hidden dark:inline text-gray-500" />
+          <span class="ml-2">Cambiar tema</span>
+        </button>
+      </li>
+    </ul>
+  </div>
 </header>
 
 <script is:inline>
@@ -92,29 +139,36 @@ const navItems = [
     }
   }
   
-  // Event listeners
+  // Event listeners para el tema
   document.addEventListener('DOMContentLoaded', initializeTheme)
   document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme)
+  document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme)
   
   // Sincronizar con cambios del sistema
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
     if (!getStoredTheme()) applyTheme(e.matches)
   })
+
+  // Menú móvil
+  const mobileMenuButton = document.getElementById('mobile-menu-button')
+  const mobileMenu = document.getElementById('mobile-menu')
+
+  mobileMenuButton?.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('opacity-0')
+    mobileMenu.classList.toggle('invisible')
+    mobileMenu.classList.toggle('-translate-y-5')
+    mobileMenu.classList.toggle('translate-y-0')
+  })
 </script>
 
 <style>
-  @media (max-width: 768px) {
-    nav.mobile-menu ul {
-      @apply flex-col absolute top-full mt-2 left-0 right-0 bg-white dark:bg-gray-800 p-2 rounded-xl shadow-lg opacity-0 invisible transition-all;
-    }
-    
-    nav.mobile-menu:hover ul {
-      @apply opacity-100 visible;
-    }
-    
-    nav.mobile-menu::before {
-      content: '☰';
-      @apply text-xl cursor-pointer;
-    }
+  #mobile-menu {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  #mobile-menu.translate-y-0 {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
   }
 </style>
