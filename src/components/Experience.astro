@@ -1,23 +1,47 @@
 ---
-import ExperienceItem from "./Experience-Item.astro"
+import ExperienceItem from "./ExperienceItem.astro";
+import { TAGS } from "../data/tags";
 
-const EXPERIENCIE = [
-    {
-        date: 'November 2021 - May 2024',
-        title: 'Software Developer',
-        company: 'The Breach Studios',
-        description: 'Videogames programming with Unreal Engine/C++ and Unity/C#. Worked on The Harvest, Project ST and made Fortnite maps.',
-        link: 'https://thebreachstudios.com/'
-    },
-]
+interface Experience {
+  title: string;
+  company: string;
+  description: string[];
+  date: string;
+  employmentType?: string;
+  location?: string;
+  technologies?: (keyof typeof TAGS)[];
+}
+
+const EXPERIENCE: Experience[] = [
+  {
+    title: "Gameplay Programmer",
+    company: "The Breach Studios",
+    description: [
+      "Developed core gameplay systems for The Harvest (Unreal Engine/C++)",
+      "Optimized game performance, achieving 30% FPS improvement",
+      "Implemented multiplayer features for Project ST",
+      "Collaborated in Agile teams to deliver features on schedule"
+    ],
+    date: "2021 - 2024",
+    employmentType: "Full-time",
+    location: "Remote",
+    technologies: ['cpp', 'unreal', 'csharp', 'unity_dark', 'git']
+  }
+];
 ---
 
-<ol class="relative mt-16">
-    {
-      EXPERIENCIE.map((experiencie) => (
-        <li class="">
-          <ExperienceItem {...experiencie} />
-        </li>
-      ))
-    }
-  </ol>
+<ol class="relative mt-16 space-y-12">
+  {EXPERIENCE.map((experience) => (
+    <li class="group">
+      <ExperienceItem 
+        title={experience.title}
+        company={experience.company}
+        description={experience.description}
+        date={experience.date}
+        employmentType={experience.employmentType}
+        location={experience.location}
+        technologies={experience.technologies}
+      />
+    </li>
+  ))}
+</ol>

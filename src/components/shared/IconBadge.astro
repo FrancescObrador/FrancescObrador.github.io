@@ -1,0 +1,16 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  icon: string;
+  color?: string;
+  class?: string;
+}
+
+const { icon, color = "text-purple-500", class: className } = Astro.props;
+---
+
+<span class={`inline-flex items-center gap-2 ${className}`}>
+  <Icon name={icon} class={`w-5 h-5 ${color}`} />
+  <slot />
+</span>

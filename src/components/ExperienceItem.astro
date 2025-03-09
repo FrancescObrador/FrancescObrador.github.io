@@ -1,0 +1,75 @@
+---
+import { Icon } from "astro-icon/components";
+import LinkInline from "./shared/LinkInline.astro";
+import TimelinePoint from "./shared/TimelinePoint.astro";
+import GradientText from "./shared/GradientText.astro";
+import Badge from "./shared/Badge.astro";
+import TechStackItem from "./shared/TechStackItem.astro";
+import { TAGS } from "../data/tags";
+
+interface Props {
+  title: string
+  company: string
+  description: string | string[]
+  link?: string
+  date: string
+  icon?: string
+  employmentType?: string
+  location?: string
+  technologies?: (keyof typeof TAGS)[]
+}
+
+const { 
+  title,
+  company,
+  description,
+  link,
+  date,
+  employmentType,
+  location,
+  technologies = []
+} = Astro.props;
+---
+
+<TimelinePoint {date} {title} {company}>
+  <div class="space-y-4">
+    <div class="flex flex-wrap gap-2 items-center">
+      {employmentType && <Badge variant="yellow">{employmentType}</Badge>}
+      {location && <Badge variant="gray">{location}</Badge>}
+    </div>
+
+    {Array.isArray(description) ? (
+      <ul class="space-y-2 [&>li]:flex [&>li]:items-start [&>li]:gap-2">
+        {description.map((item) => (
+          <li>
+            <Icon name="heroicons:check-circle" class="w-4 h-4 mt-1 flex-shrink-0 text-green-500" />
+            <p class="leading-relaxed text-gray-600 dark:text-gray-300">{item}</p>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="leading-relaxed text-gray-600 dark:text-gray-300">
+        {description}
+      </p>
+    )}
+
+    {technologies.length > 0 && (
+      <div class="flex flex-wrap gap-2 mt-4">
+        {technologies.map((techKey) => {
+          const tech = TAGS[techKey];
+          return <TechStackItem icon={tech.icon} name={tech.name} />;
+        })}
+      </div>
+    )}
+
+    {link && (
+      <LinkInline 
+        href={link} 
+        class="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-yellow-400/10 hover:bg-yellow-400/20 text-yellow-600 dark:text-yellow-400 rounded-full transition-colors"
+      >
+        <span>View Case Study</span>
+        <Icon name="heroicons:arrow-top-right-on-square" class="w-4 h-4" />
+      </LinkInline>
+    )}
+  </div>
+</TimelinePoint>

@@ -1,0 +1,38 @@
+---
+interface Props {
+  href: string
+  class?: string
+}
+
+const { href, class: className } = Astro.props
+
+let isExternal = false
+let isSameHost = true
+
+try {
+  const url = new URL(href, import.meta.env.SITE)
+  const currentHost = new URL(import.meta.env.SITE).host
+  isExternal = url.host !== currentHost
+  isSameHost = url.host === currentHost
+} catch {
+  isExternal = href.startsWith('http')
+}
+
+const shouldOpenInNewTab = isExternal
+const isAnchorLink = href.startsWith('#')
+
+const attributes = {
+  href,
+  class: className,
+  target: shouldOpenInNewTab && !isAnchorLink ? '_blank' : '_self',
+  rel: shouldOpenInNewTab ? 'noopener noreferrer' : '',
+  ...(isSameHost && !isAnchorLink && { 'data-astro-prefetch': true })
+}
+---
+
+<a 
+  {...attributes}
+  class={`inline-flex items-center font-medium hover:underline ${className || ''}`}
+>
+  <slot />
+</a>

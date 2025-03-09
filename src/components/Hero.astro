@@ -1,55 +1,81 @@
 ---
-import { Icon } from "astro-icon/components"
-import Badge from "./Badge.astro"
-import SocialPill from "./SocialPill.astro"
-import { Image } from "astro:assets"
+import { Image } from "astro:assets";
+import SocialPill from "./shared/SocialPill.astro";
+import GradientText from "./shared/GradientText.astro";
 
-const personalImageAlt = "Francesc Miquel Obrador Artigues"
+const personalImageAlt = "Francesc Obrador - Software Developer";
 ---
-<div class="max-w-xl">
-  <div class="flex gap-4 mb-4">
-    <Image
-      height="32"
-      width="32"
-      class="rounded-full shadow-lg size-32"
-      src="https://avatars.githubusercontent.com/u/43440273?v=4"
-      alt={personalImageAlt}
-    />
-    <a
+
+<div class="grid gap-8 md:grid-cols-[auto_1fr] md:items-start">
+  <div class="flex flex-col items-center gap-4">
+    <div class="relative">
+      <Image
+        width="160"
+        height="160"
+        src="https://avatars.githubusercontent.com/u/43440273?v=4"
+        alt={personalImageAlt}
+        class="object-cover w-32 h-32 rounded-2xl shadow-xl ring-1 ring-black/10 dark:ring-white/20 bg-black/5 dark:bg-white/5"
+      />
+    </div>
+
+    <!-- <a
       href="https://linkedin.com/in/francesc-obrador"
       target="_blank"
       rel="noopener"
-      class="flex items-center transition md:justify-center md:hover:scale-105"
+      class="flex items-center px-4 py-2 text-sm font-medium transition-all bg-yellow-400/10 text-yellow-600 dark:text-yellow-400 rounded-full hover:bg-yellow-400/20"
     >
-      <Badge>Open to work</Badge>
-    </a>
+      <span class="relative flex h-2 w-2 mr-2">
+        <span class="absolute inline-flex w-full h-full bg-yellow-400 rounded-full opacity-75 animate-ping"></span>
+        <span class="relative inline-flex w-2 h-2 bg-yellow-500 rounded-full"></span>
+      </span>
+      Open to work
+    </a> -->
   </div>
-  <h1
-    class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white"
-  >
-    Hey, I'm Francesc
-  </h1>
-  <p
-    class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-500 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
-  >
-  <strong>3 years of experience</strong> as a Software Developer. Graduated in Interactive Digital Content Development from Barcelona's University. 
-  </p>
-  <nav class="flex flex-wrap gap-4 mt-8">
-    <SocialPill href="https://www.linkedin.com/in/francesc-obrador/">
-      <Icon name="social/linkedin" class="size-6"/>
-      LinkedIn
-  </SocialPill>
-  <SocialPill href="https://github.com/FrancescObrador">
-    <Icon name="social/github" class="size-6"/>
-    GitHub
-  </SocialPill>
-  <SocialPill href="/documents/cv.pdf">
-    <Icon name="items/cv" class="size-6"/>
-    cv
-  </SocialPill>
-  <SocialPill href="mailto:obrador.francesc@gmail.com">
-    <Icon name="items/mail" class="size-6"/>
-    obrador.francesc@gmail.com
-  </SocialPill>
-  </nav>
+
+  <div class="space-y-4">
+    <h1
+      class="text-4xl font-bold tracking-tight text-gray-800 dark:text-white sm:text-5xl"
+    >
+      <GradientText from="from-blue-400" to="to-blue-600"
+        >Hey, I'm Francesc</GradientText
+      >
+    </h1>
+
+    <div class="p-4 rounded-xl bg-black/5 dark:bg-white/5 ring-1 ring-black/10 dark:ring-white/20">
+      <p class="text-xl leading-relaxed text-gray-800 dark:text-gray-300">
+        <span class="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent font-semibold">
+          Full-stack developer
+        </span> specializing in 
+        <span class="font-medium text-blue-600 dark:text-blue-400">Web development</span>.
+        Former game programmer at Breach Studios, now seeking to apply my skills in
+        building scalable web applications and interactive experiences.
+      </p>
+    </div>
+
+    <nav class="flex flex-wrap gap-3 mt-6">
+      <SocialPill
+        href="https://linkedin.com/in/francesc-obrador"
+        icon="social/linkedin"
+        class="bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20"
+      >
+        LinkedIn
+      </SocialPill>
+
+      <SocialPill
+        href="https://github.com/FrancescObrador"
+        icon="social/github"
+        class="bg-gray-500/10 text-gray-600 dark:text-gray-400 hover:bg-gray-500/20"
+      >
+        GitHub
+      </SocialPill>
+
+      <SocialPill
+        href="/documents/cv.pdf"
+        icon="heroicons:document-arrow-down"
+        class="bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-500/20"
+      >
+        My CV
+      </SocialPill>
+    </nav>
+  </div>
 </div>

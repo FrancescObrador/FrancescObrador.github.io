@@ -1,0 +1,36 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  date: string;
+  title: string;
+  company: string;
+}
+
+const { date, title, company } = Astro.props;
+---
+
+<div class="group relative pb-8 md:grid md:grid-cols-5 md:gap-6 md:pb-12 before:absolute before:left-[-8px] md:before:left-[-28px] before:top-4 before:block before:h-[calc(100%-2rem)] before:border-l-2 before:border-black/20 dark:before:border-white/15 before:content-[''] hover:before:border-yellow-400/50 transition-colors">
+  <div class="relative md:col-span-2">
+    <div class="sticky top-0 space-y-2">
+      <!-- Icon Slot -->
+      <slot name="icon" />
+      
+      <!-- Title with Gradient -->
+      <h3 class="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-lg font-bold text-transparent">
+        {title}
+      </h3>
+      
+      <!-- Company & Date -->
+      <div class="space-y-1">
+        <h4 class="font-medium text-gray-600 dark:text-gray-200">{company}</h4>
+        <time class="text-sm text-gray-500/80 dark:text-gray-400/80">{date}</time>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Slot -->
+  <div class="relative flex flex-col gap-3 text-pretty text-gray-600 dark:text-gray-300 md:col-span-3 md:pb-12">
+    <slot />
+  </div>
+</div>

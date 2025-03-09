@@ -1,100 +1,120 @@
 ---
+import { Icon } from "astro-icon/components";
+import LinkInline from "./shared/LinkInline.astro";
+
 const navItems = [
   {
     title: "Experience",
     label: "experience",
     url: "/#experience",
+    icon: "heroicons:briefcase"
   },
   {
     title: "Projects",
     label: "projects",
     url: "/#projects",
+    icon: "heroicons:folder-open"
   },
   {
-    title: "About me",
+    title: "About",
     label: "about-me",
     url: "/#about-me",
+    icon: "heroicons:user"
   },
   {
     title: "Contact",
     label: "contact",
     url: "mailto:obrador.francesc@gmail.com",
+    icon: "heroicons:envelope"
   },
 ]
 ---
 
-<header
-  class="fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2"
->
-  <nav
-    class="flex px-3 text-sm font-medium rounded-full text-gray-600 dark:text-gray-200 justify-center items-center"
-  >
-    {
-      navItems.map((link) => (
-        <a
-          class="relative block px-2 py-2 transition hover:text-yellow-500 dark:hover:text-yellow-400"
-          aria-label={link.label}
-          href={link.url}
+<header class="fixed top-0 z-50 w-full">
+  <nav class="flex items-center justify-center px-4 py-3 mx-auto text-sm font-medium transition-all duration-300 max-w-7xl backdrop-blur-md bg-white/50 dark:bg-gray-800/30 rounded-2xl ring-1 ring-black/10 dark:ring-white/15 hover:ring-black/20 dark:hover:ring-white/30 shadow-sm hover:shadow-md">
+    <ul class="flex gap-1 p-1 rounded-xl bg-black/5 dark:bg-white/5">
+      {navItems.map((link) => (
+        <li>
+          <LinkInline
+            href={link.url}
+            class="relative flex items-center gap-2 px-4 py-2 rounded-lg transition-colors hover:bg-black/5 dark:hover:bg-white/5 [&.active]:bg-blue-500/10 [&.active]:text-blue-600 dark:[&.active]:text-blue-400"
+            aria-label={link.label}
+            data-section={link.label}
+          >
+            <Icon name={link.icon} class="w-4 h-4" />
+            <span>{link.title}</span>
+            <div class="absolute bottom-0 left-1/2 w-[calc(100%-2rem)] h-0.5 -translate-x-1/2 bg-current opacity-0 transition-opacity group-hover/nav:opacity-10"></div>
+          </LinkInline>
+        </li>
+      ))}
+      
+      <!-- Toggle de Tema -->
+      <li>
+        <button
+          id="theme-toggle"
+          class="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors group"
+          aria-label="Toggle dark mode"
         >
-          {link.title}
-        </a>
-      ))
-    }
+          <Icon name="heroicons:sun" class="w-5 h-5 dark:hidden text-yellow-500 group-hover:text-yellow-600" />
+          <Icon name="heroicons:moon" class="w-5 h-5 hidden dark:inline text-gray-500 group-hover:text-gray-600" />
+        </button>
+      </li>
+    </ul>
   </nav>
 </header>
 
-<script>
-  document.addEventListener("astro:page-load", () => {
-    const sections = document.querySelectorAll("section")
-    const navItems = document.querySelectorAll("header nav a")
-
-    const callback = (entries: any[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          navItems.forEach((item) => {
-            if (item.getAttribute("aria-label") == entry.target.id) {
-              item.classList.add("text-yellow-500")
-            } else {
-              item.classList.remove("text-yellow-500")
-            }
-          })
-        }
-      })
+<script is:inline>
+  // Sistema de tema persistente
+  const themeKey = 'portfolio-theme'
+  
+  const getStoredTheme = () => localStorage.getItem(themeKey)
+  const setStoredTheme = theme => localStorage.setItem(themeKey, theme)
+  
+  const applyTheme = (isDark) => {
+    document.documentElement.classList.toggle('dark', isDark)
+    setStoredTheme(isDark ? 'dark' : 'light')
+  }
+  
+  const toggleTheme = () => {
+    const isDark = !document.documentElement.classList.contains('dark')
+    applyTheme(isDark)
+  }
+  
+  // Inicialización del tema
+  const initializeTheme = () => {
+    const savedTheme = getStoredTheme()
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    
+    if (savedTheme) {
+      applyTheme(savedTheme === 'dark')
+    } else {
+      applyTheme(systemDark)
     }
-
-    const observer = new IntersectionObserver(callback, {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.3,
-    })
-
-    sections.forEach((section) => {
-      observer.observe(section)
-    })
-
-    // Cleanup function
-    document.onvisibilitychange = () => {
-      if (document.visibilityState === "hidden") {
-        observer.disconnect()
-      } else {
-        sections.forEach((section) => {
-          observer.observe(section)
-        })
-      }
-    }
+  }
+  
+  // Event listeners
+  document.addEventListener('DOMContentLoaded', initializeTheme)
+  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme)
+  
+  // Sincronizar con cambios del sistema
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!getStoredTheme()) applyTheme(e.matches)
   })
 </script>
 
 <style>
-  nav {
-    animation: nav-shadown 1s linear both;
-    animation-timeline: scroll();
-    animation-range: 0 100px;
-  }
-
-  @keyframes nav-shadown {
-    to {
-      @apply shadow-lg ring-1 backdrop-blur dark:bg-gray-800/90 bg-white/50 ring-white/10;
+  @media (max-width: 768px) {
+    nav.mobile-menu ul {
+      @apply flex-col absolute top-full mt-2 left-0 right-0 bg-white dark:bg-gray-800 p-2 rounded-xl shadow-lg opacity-0 invisible transition-all;
+    }
+    
+    nav.mobile-menu:hover ul {
+      @apply opacity-100 visible;
+    }
+    
+    nav.mobile-menu::before {
+      content: '☰';
+      @apply text-xl cursor-pointer;
     }
   }
 </style>

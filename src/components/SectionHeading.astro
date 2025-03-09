@@ -1,0 +1,28 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  icon?: string;
+}
+
+const { title, subtitle, icon = "heroicons:sparkles" } = Astro.props;
+---
+
+<header class="space-y-3 mb-8">
+  <div class="flex items-center gap-3">
+    <div class="p-2 rounded-lg bg-blue-500/10">
+      <Icon name={icon} class="w-6 h-6 text-blue-500" />
+    </div>
+    <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+      {title}
+    </h2>
+  </div>
+  
+  {subtitle && (
+    <p class="pl-11 text-lg text-gray-600 dark:text-gray-400">
+      {subtitle}
+    </p>
+  )}
+</header>

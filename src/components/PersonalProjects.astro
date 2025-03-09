@@ -3,36 +3,60 @@ import {TAGS} from '../data/tags'
 import ProjectCard from "./ProjectCard.astro"
 
 const PROJECTS = [
-    // {
-    //     title: 'Hotel Web',
-    //     description: 'Designed and implemented a comprehensive hotel booking platform. Created a relational database, a RESTful API backend, and a user-friendly frontend for customers to view and book hotel rooms.',
-    //     link: '',
-    //     github: '',
-    //     image: '/images/mockup.png',
-    //     tags: [TAGS.angular, TAGS.css, TAGS.docker, TAGS.git, TAGS.html, TAGS.nestjs, TAGS.postgres, TAGS.tailwind, TAGS.typeorm, TAGS.typescript]
-    // },
-    {
-        title: 'Treasure Keeper',
-        description: 'Idle clicker game developed as a side project in 2021 published on the Google Play Store (now unpublished)',
-        link: '',
-        github: '',
-        image: '/images/treasure-keeper.webp',
-        tags: [TAGS.csharp, TAGS.git, TAGS.unity_dark]
-    }
+  // {
+  //     title: 'Hotel Web',
+  //     description: 'Designed and implemented a comprehensive hotel booking platform. Created a relational database, a RESTful API backend, and a user-friendly frontend for customers to view and book hotel rooms.',
+  //     link: '',
+  //     github: '',
+  //     image: '/images/mockup.png',
+  //     tags: [TAGS.angular, TAGS.css, TAGS.docker, TAGS.git, TAGS.html, TAGS.nestjs, TAGS.postgres, TAGS.tailwind, TAGS.typeorm, TAGS.typescript]
+  // },
+//   {
+//   title: "Palau System",
+//   description: "Master's final project: A platform for managing cultural events like orchestra concerts and performances. Includes two frontends—for administrators and artists—to streamline scheduling, rehearsals, and coordination.",
+//   link: "",
+//   github: "",
+//   image: "/images/mockup.png",
+//   tags: [TAGS.react, TAGS.typescript, TAGS.redux, TAGS.tailwind, TAGS.aspnet, TAGS.csharp, TAGS.dotnet, TAGS.sqlserver]
+// },
+{
+  title: "MovyFlick",
+  description: "A web application for creating and managing personalized movie lists. Focused on delivering a smooth and intuitive user experience, with real-time updates and secure user authentication.",
+  link: "",
+  github: "",
+  image: "/images/movyflick.jpeg",
+  tags: [TAGS.react, TAGS.typescript, TAGS.redux, TAGS.reactrouter, TAGS.tailwind, TAGS.vitejs, TAGS.firebase]
+},
+// {
+//   title: "Marina d'Or Ciudad de vacaciones",
+//   description: "A hotel reservation system for a vacation resort, designed to streamline the booking process and enhance user experience. Ensures efficient data management and a seamless interface for both users and administrators.",
+//   link: "",
+//   github: "",
+//   image: "/images/mockup.png",
+//   tags: [TAGS.vue, TAGS.typescript, TAGS.aspnet, TAGS.csharp, TAGS.dotnet, TAGS.sqlserver]
+// },
+{
+  title: "Treasure Keeper",
+  description: "An idle clicker game developed and published on Google Play Store. Designed with engaging mechanics and incremental progression to keep players hooked, showcasing strong game design and development skills.",
+  link: "",
+  github: "",
+  image: "/images/treasure-keeper.webp",
+  tags: [TAGS.unity_dark, TAGS.csharp]
+},
 ]
 ---
 
 <div class="flex flex-col gap-y-16">
-    {
-      PROJECTS.map(({ image, title, description, tags, link, github }) => (
-        <ProjectCard
-          image={image}, 
-          title={title}, 
-          description={description}, 
-          tags={tags}, 
-          link={link}, 
-          github={github}
-        />      
-      ))
-    }
+  {
+    PROJECTS.map(({ image, title, description, tags, link, github }) => (
+    <ProjectCard
+      image={image}, 
+      title={title}, 
+      description={description}, 
+      tags={tags}, 
+      link={link}, 
+      github={github}
+    />      
+    ))
+  }
 </div>

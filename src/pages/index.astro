@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import {Icon} from 'astro-icon/components'
+import { Icon } from 'astro-icon/components';
 import Experience from '../components/Experience.astro';
 import SectionContainer from '../components/SectionContainer.astro';
 import WorkProjects from '../components/WorkProjects.astro';
@@ -9,38 +9,69 @@ import AboutMe from '../components/AboutMe.astro';
 import PersonalProjects from '../components/PersonalProjects.astro';
 ---
 
-<Layout title="Porfolio de Francesc Obrador - Desarrollador de Software" description='Desarrollador de Software'>
-	<main class="px-4">
-		<SectionContainer class="py-16 md:py-36">
-			<Hero>
-		</SectionContainer>
-		<div class="py-44">
-		<SectionContainer id="experience">
-			<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
-				<Icon name="items/briefcase" class="size-4 lg:size-6"/>
-				Experience
-			</h2>
-			<Experience/>
-		</SectionContainer>
-		<SectionContainer id="projects">
-			<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
-				<Icon name="items/code" class="size-4 lg:size-6"/>
-				Personal Projects
-			</h2>
-			<PersonalProjects/>
-		</SectionContainer>
-		<SectionContainer>
-			<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
-				<Icon name="items/code" class="size-4 lg:size-6"/>
-				Work Projects
-			</h2>
-			<WorkProjects/>
-		<SectionContainer id="about-me">
-			<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
-				<Icon name="items/user-heart" class="size-4 lg:size-6"/>
-				About Me
-			</h2>
-			<AboutMe/>
-		</SectionContainer>
-	</main>
+<Layout 
+  title="Francesc Obrador - Software Developer" 
+  description="Full-stack developer specializing in .NET and React, with game development experience at Breach Studios"
+>
+  <main class="px-4">
+    <!-- Hero Section -->
+    <SectionContainer class="py-16 md:py-24 lg:py-32">
+      <Hero />
+    </SectionContainer>
+
+    <!-- Main Content -->
+    <div class="space-y-24 md:space-y-32 lg:space-y-40 pb-24">
+      <!-- Experience -->
+      <SectionContainer id="experience">
+        <h2 class="flex items-center mb-8 text-3xl font-bold gap-x-3">
+          <Icon name="heroicons:briefcase" class="w-6 h-6 text-blue-500" />
+          <span class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+            Professional Experience
+          </span>
+        </h2>
+        <Experience />
+      </SectionContainer>
+
+      <!-- Projects -->
+      <SectionContainer id="projects">
+        <div class="space-y-12">
+          <h2 class="flex items-center mb-8 text-3xl font-bold gap-x-3">
+            <Icon name="heroicons:code-bracket" class="w-6 h-6 text-purple-500" />
+            <span class="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
+              Projects & Contributions
+            </span>
+          </h2>
+          
+          <!-- Work Projects -->
+          <div class="space-y-8">
+            <h3 class="flex items-center text-2xl font-semibold gap-x-2 text-gray-800 dark:text-gray-200">
+              <Icon name="heroicons:building-office" class="w-5 h-5 text-blue-400" />
+              Professional Work
+            </h3>
+            <WorkProjects />
+          </div>
+
+          <!-- Personal Projects -->
+          <div class="space-y-8">
+            <h3 class="flex items-center text-2xl font-semibold gap-x-2 text-gray-800 dark:text-gray-200">
+              <Icon name="heroicons:user" class="w-5 h-5 text-green-400" />
+              Personal & Academic
+            </h3>
+            <PersonalProjects />
+          </div>
+        </div>
+      </SectionContainer>
+
+      <!-- About Me -->
+      <SectionContainer id="about-me">
+        <h2 class="flex items-center mb-8 text-3xl font-bold gap-x-3">
+          <Icon name="heroicons:user-circle" class="w-6 h-6 text-yellow-500" />
+          <span class="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+            About Me
+          </span>
+        </h2>
+        <AboutMe />
+      </SectionContainer>
+    </div>
+  </main>
 </Layout>
