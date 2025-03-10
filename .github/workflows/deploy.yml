@@ -25,16 +25,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm  
+          cache: npm
 
       - name: Install dependencies
-        run: npm ci  
+        run: npm ci  # Usa npm ci para instalación limpia
 
       - name: Build project
         run: npm run build
 
-      - name: Verify build output
+      - name: Verify build output (DEBUG)
         run: |
+          echo "Contenido del directorio actual:"
+          ls -R
           echo "Contenido de dist:"
           ls -R dist/
 
