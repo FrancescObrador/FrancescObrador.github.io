@@ -12,7 +12,9 @@ const { href, icon, class: className } = Astro.props;
 
 <a
   href={href}
-  class={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors rounded-full ${className || ''}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  class={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors rounded-full ${className || ""}`}
 >
   <Icon name={icon} class="w-5 h-5" />
   <slot />
