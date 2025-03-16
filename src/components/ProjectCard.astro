@@ -9,25 +9,27 @@ const { image, title, description, tags, link, github } = Astro.props;
 ---
 
 <article class="group grid md:grid-cols-2 gap-8 p-6 rounded-2xl bg-white/50 dark:bg-gray-800/30 ring-1 ring-black/10 dark:ring-white/15 hover:ring-black/20 dark:hover:ring-white/30 transition-all duration-300">
-  <div class="relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+  {/* Contenedor con aspect-ratio fijo 16:9 */}
+  <div class="relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow aspect-[16/9]">
     <Image
-      width="600"
-      height="338" 
+      width={1600}
+      height={900}
       alt={`${title} project screenshot`}
-      class="object-cover w-full h-60 md:h-full transition-transform duration-500 group-hover:scale-105"
+      class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
       loading="lazy"
       src={image}
     />
   </div>
 
+  {/* Resto del contenido igual */}
   <div class="flex flex-col justify-between">
-    <div class="space-y-6"> <!-- Aumentado el espacio vertical -->
+    <div class="space-y-6">
       <div>
-        <GradientText from="from-blue-400" to="to-blue-600" class="text-2xl font-bold mb-4"> <!-- Añadido mb-4 -->
+        <GradientText from="from-blue-400" to="to-blue-600" class="text-2xl font-bold mb-4">
           {title}
         </GradientText>
         
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-2 mt-2 mb-6"> <!-- Añadido mt-2 y mb-6 -->
+        <div class="grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-2 mt-2 mb-6">
           {tags.map((tag: any) => (
             <TechStackItem icon={tag.icon} name={tag.name} />
           ))}
@@ -39,7 +41,7 @@ const { image, title, description, tags, link, github } = Astro.props;
       </p>
     </div>
 
-    <div class="flex flex-wrap gap-3 mt-6"> <!-- Añadido mt-6 -->
+    <div class="flex flex-wrap gap-3 mt-6">
       {github && (
         <LinkButton 
           href={github}
