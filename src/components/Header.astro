@@ -46,6 +46,7 @@ const navItems = [
               class="relative flex items-center gap-2 px-4 py-2 rounded-lg transition-colors hover:bg-black/5 dark:hover:bg-white/5 [&.active]:bg-blue-500/10 [&.active]:text-blue-600 dark:[&.active]:text-blue-400"
               aria-label={link.label}
               data-section={link.label}
+              data-astro-prefetch
             >
               <Icon name={link.icon} class="w-4 h-4" />
               <span>{link.title}</span>
@@ -70,6 +71,7 @@ const navItems = [
                 <a
                   href={l === "es" ? "/" : `/${l}/`}
                   class="block px-4 py-2 rounded-md hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-sm"
+                  data-astro-prefetch
                 >
                   {name}
                 </a>
@@ -122,6 +124,7 @@ const navItems = [
               class="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors hover:bg-black/5 dark:hover:bg-white/5 [&.active]:bg-blue-500/10 [&.active]:text-blue-600 dark:[&.active]:text-blue-400"
               aria-label={link.label}
               data-section={link.label}
+              data-astro-prefetch
             >
               <Icon name={link.icon} class="w-4 h-4" />
               <span>{link.title}</span>
@@ -159,6 +162,7 @@ const navItems = [
             Object.entries(languages).map(([l, name]) => (
               <a
                 href={l === "es" ? "/" : `/${l}/`}
+                data-astro-prefetch
                 class={`px-3 py-1 rounded-full text-xs transition-colors ${
                   lang === l
                     ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 ring-1 ring-blue-500/20"

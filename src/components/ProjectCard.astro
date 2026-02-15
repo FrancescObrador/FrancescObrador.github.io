@@ -7,7 +7,16 @@ import TechStackItem from "./shared/TechStackItem.astro";
 import { TAGS } from "../data/tags";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
-const { image, title, description, tags, link, github, type } = Astro.props;
+const {
+  image,
+  title,
+  description,
+  tags,
+  link,
+  github,
+  type,
+  loading = "lazy",
+} = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
@@ -27,8 +36,12 @@ const t = useTranslations(lang);
     <Image
       alt={`${title} project screenshot`}
       class="project-image object-cover w-full h-full transition-all duration-700 opacity-0 group-hover/image:scale-105"
-      loading="lazy"
+      loading={loading}
+      decoding="async"
       src={image}
+      width={800}
+      widths={[400, 800, 1200]}
+      sizes="(max-width: 768px) 100vw, 400px"
       onload="const img = this; setTimeout(() => { img.classList.remove('opacity-0'); img.closest('.skeleton')?.classList.remove('skeleton'); }, 50)"
     />
     <script is:inline>

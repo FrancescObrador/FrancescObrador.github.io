@@ -21,6 +21,13 @@ const sortedProjects = projects.sort((a, b) => {
     <ProjectFilters />
 
     <div class="flex flex-col gap-y-12">
-        {sortedProjects.map((project) => <ProjectCard {...project.data} />)}
+        {
+            sortedProjects.map((project, index) => (
+                <ProjectCard
+                    {...project.data}
+                    loading={index === 0 ? "eager" : "lazy"}
+                />
+            ))
+        }
     </div>
 </div>
