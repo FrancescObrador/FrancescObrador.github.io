@@ -1,7 +1,11 @@
 ---
+import { getLangFromUrl } from "../i18n/utils";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import ImageModal from "../components/shared/ImageModal.astro";
+import SideNav from "../components/shared/SideNav.astro";
 import { ViewTransitions } from "astro:transitions";
+import "@fontsource-variable/inter";
 
 interface Props {
   title: string;
@@ -9,47 +13,205 @@ interface Props {
 }
 
 const { description, title } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang="es" class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    {/* SEO Meta Tags */}
+    <meta name="description" content={description} />
+    <link rel="canonical" href={Astro.url.href} />
+
+    {/* Alternate Language Links */}
+    <link rel="alternate" hreflang="es" href={new URL("/", Astro.site).href} />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href={new URL("/en/", Astro.site).href}
+    />
+    <link
+      rel="alternate"
+      hreflang="ca"
+      href={new URL("/ca/", Astro.site).href}
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL("/", Astro.site).href}
+    />
+
+    {/* Open Graph / Facebook */}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta
+      property="og:image"
+      content={new URL("/images/uefn.webp", Astro.url).href}
+    />
+
+    {/* Twitter */}
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url.href} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta
+      property="twitter:image"
+      content={new URL("/images/uefn.webp", Astro.url).href}
+    />
     <ViewTransitions />
+    <script is:inline>
+      const getTheme = () => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("portfolio-theme")
+        ) {
+          return localStorage.getItem("portfolio-theme");
+        }
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      };
+
+      const theme = getTheme();
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+
+      // Scroll reveal observer
+      const setupReveal = () => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 },
+        );
+
+        document
+          .querySelectorAll(".reveal")
+          .forEach((el) => observer.observe(el));
+      };
+
+      // Micro-interactions scroll logic
+      const handleScroll = () => {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+
+        // Update reading progress
+        const progressBar = document.getElementById("reading-progress");
+        if (progressBar) progressBar.style.width = scrolled + "%";
+
+        // Update Back to Top button
+        const backToTop = document.getElementById("back-to-top");
+        const progressCircle = document.getElementById("back-to-top-progress");
+
+        if (backToTop) {
+          if (winScroll > 300) {
+            backToTop.classList.remove("translate-y-20", "opacity-0");
+          } else {
+            backToTop.classList.add("translate-y-20", "opacity-0");
+          }
+        }
+
+        if (progressCircle) {
+          const circumference = 138.23;
+          const offset = circumference - (scrolled / 100) * circumference;
+          progressCircle.style.strokeDashoffset = offset.toString();
+        }
+      };
+
+      if (!window.scrollSetup) {
+        window.addEventListener("scroll", handleScroll);
+        window.scrollSetup = true;
+      }
+
+      const setupBackToTop = () => {
+        const btn = document.getElementById("back-to-top");
+        if (btn && !btn.hasListener) {
+          btn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          });
+          btn.hasListener = true;
+        }
+      };
+
+      document.addEventListener("astro:page-load", () => {
+        setupReveal();
+        handleScroll();
+        setupBackToTop();
+      });
+    </script>
   </head>
 
-  <body class="relative bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-50">
-
+  <body
+    class="relative bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-50"
+  >
     <div
-      class="absolute inset-0 -z-10 min-h-screen bg-gradient-to-b from-gray-50 to-white 
-      dark:from-gray-950 dark:to-gray-900"
-      style="background-image: radial-gradient(
-        ellipse 80% 80% at 50% -20%,
-        rgba(199, 210, 254, 0.3) 0%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      @media (prefers-color-scheme: dark) {
-        background-image: radial-gradient(
-          ellipse 80% 80% at 50% -20%,
-          rgba(99, 102, 241, 0.15) 0%,
-          rgba(0, 0, 0, 0) 100%
-        );
-      }"
-    ></div>
+      id="reading-progress"
+      class="fixed top-0 left-0 w-0 h-1 bg-blue-500 z-[60] transition-all duration-150"
+    >
+    </div>
+    <div class="background-overlay"></div>
 
     <Header />
-    
+
     <main class="flex-1">
       <slot />
     </main>
-    
+
     <Footer />
+    <ImageModal />
+    <SideNav />
+
+    <button
+      id="back-to-top"
+      class="fixed bottom-6 left-6 z-40 p-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-lg translate-y-20 opacity-0 transition-all duration-500 hover:scale-110 active:scale-95 group"
+      aria-label="Volver arriba"
+    >
+      <svg
+        class="size-6 text-slate-600 dark:text-slate-400 group-hover:text-blue-500 transition-colors"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+      </svg>
+      {/* Círculo de progreso sutil */}
+      <svg class="absolute inset-0 size-full -rotate-90 pointer-events-none">
+        <circle
+          id="back-to-top-progress"
+          cx="24"
+          cy="24"
+          r="22"
+          stroke="currentColor"
+          stroke-width="2"
+          fill="transparent"
+          class="text-blue-500/20"
+          stroke-dasharray="138.23"
+          stroke-dashoffset="138.23"></circle>
+      </svg>
+    </button>
 
     <style is:global>
       :root {
@@ -57,8 +219,99 @@ const { description, title } = Astro.props;
         --header-height: 4rem;
       }
 
+      .background-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: -10;
+        overflow: hidden;
+        @apply bg-slate-50 dark:bg-slate-950;
+      }
+
+      .background-overlay::before,
+      .background-overlay::after {
+        content: "";
+        position: absolute;
+        width: 100vmax;
+        height: 100vmax;
+        top: -50vmax;
+        left: -50vmax;
+        opacity: 0.4;
+        filter: blur(80px);
+        z-index: -1;
+        animation: mesh-morph 20s linear infinite;
+      }
+
+      .background-overlay::before {
+        background: radial-gradient(
+          circle,
+          rgba(99, 102, 241, 0.3) 0%,
+          transparent 70%
+        );
+      }
+
+      .background-overlay::after {
+        background: radial-gradient(
+          circle,
+          rgba(199, 210, 254, 0.3) 0%,
+          transparent 70%
+        );
+        animation-delay: -10s;
+        animation-duration: 30s;
+      }
+
+      .dark .background-overlay::before {
+        background: radial-gradient(
+          circle,
+          rgba(99, 102, 241, 0.15) 0%,
+          transparent 70%
+        );
+      }
+
+      .dark .background-overlay::after {
+        background: radial-gradient(
+          circle,
+          rgba(74, 222, 128, 0.05) 0%,
+          transparent 70%
+        );
+      }
+
+      @keyframes mesh-morph {
+        0% {
+          transform: translate(0, 0) rotate(0deg) scale(1);
+        }
+        33% {
+          transform: translate(20%, 10%) rotate(120deg) scale(1.1);
+        }
+        66% {
+          transform: translate(-10%, 20%) rotate(240deg) scale(0.9);
+        }
+        100% {
+          transform: translate(0, 0) rotate(360deg) scale(1);
+        }
+      }
+
+      /* Scroll Reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
       html {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-family:
+          "Inter Variable",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
         font-optical-sizing: auto;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
@@ -74,7 +327,9 @@ const { description, title } = Astro.props;
       }
 
       /* Mejoras tipográficas */
-      h1, h2, h3 {
+      h1,
+      h2,
+      h3 {
         font-weight: 700;
       }
 
@@ -99,28 +354,101 @@ const { description, title } = Astro.props;
       @keyframes header-scroll {
         to {
           backdrop-filter: blur(12px);
-          background: rgba(255, 255, 255, 0.85);
-          border: 1px solid rgba(0, 0, 0, 0.05);
+          background: rgba(241, 245, 249, 0.85); /* slate-100/85 */
+          border: 1px solid rgba(226, 232, 240, 0.5); /* slate-200/50 */
           border-radius: 9999px;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
           padding: 0.5rem 1rem;
         }
       }
 
-      @media (prefers-color-scheme: dark) {
-        @keyframes header-scroll {
-          to {
-            background: rgba(0, 0, 0, 0.5);
-            border-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-          }
+      .dark @keyframes header-scroll {
+        to {
+          background: rgba(0, 0, 0, 0.5);
+          border-color: rgba(255, 255, 255, 0.1);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
       }
 
       /* Mejoras de accesibilidad */
       :focus-visible {
-        outline: 2px solid theme('colors.blue.500');
+        outline: 2px solid theme("colors.blue.500");
         outline-offset: 2px;
+      }
+
+      strong {
+        @apply font-semibold text-slate-900 dark:text-white;
+      }
+
+      /* Skeleton Shimmer */
+      .skeleton {
+        position: relative;
+        overflow: hidden;
+        background-color: theme("colors.slate.200");
+      }
+
+      .dark .skeleton {
+        background-color: theme("colors.slate.800");
+      }
+
+      .skeleton::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transform: translateX(-100%);
+        background-image: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0) 0,
+          rgba(255, 255, 255, 0.2) 20%,
+          rgba(255, 255, 255, 0.5) 60%,
+          rgba(255, 255, 255, 0)
+        );
+        animation: shimmer 2s infinite;
+      }
+
+      .dark .skeleton::after {
+        background-image: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0) 0,
+          rgba(255, 255, 255, 0.05) 20%,
+          rgba(255, 255, 255, 0.1) 60%,
+          rgba(255, 255, 255, 0)
+        );
+      }
+
+      @keyframes shimmer {
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: theme("colors.slate.50");
+      }
+
+      .dark ::-webkit-scrollbar-track {
+        background: theme("colors.slate.950");
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: theme("colors.slate.300");
+        border-radius: 5px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+      }
+
+      .dark ::-webkit-scrollbar-thumb {
+        background: theme("colors.slate.700");
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: theme("colors.blue.500");
+        background-clip: content-box;
       }
     </style>
   </body>

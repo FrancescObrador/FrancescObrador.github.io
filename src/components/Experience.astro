@@ -1,59 +1,30 @@
 ---
 import ExperienceItem from "./ExperienceItem.astro";
+import { getLangFromUrl } from "../i18n/utils";
+import { getCollection } from "astro:content";
+
 import { TAGS } from "../data/tags";
 
-interface Experience {
-  title: string;
-  company: string;
-  description: string[];
-  date: string;
-  employmentType?: string;
-  location?: string;
-  technologies?: (keyof typeof TAGS)[];
-}
+const lang = getLangFromUrl(Astro.url);
+const experienceEntries = await getCollection("experience", ({ id }) => {
+  return id.startsWith(`${lang}/`);
+});
 
-const EXPERIENCE: Experience[] = [
-{
-    title: "Web Developer",
-    company: "NTT Data",
-    description: [
-      "Development and maintenance of ASP.NET MVC web applications.",
-      "Troubleshooting technical issues and improving the performance of production solutions.",
-      "Collaboration in agile teams and software lifecycle management using Scrum.",
-    ],
-    date: "2025 - Present",
-    employmentType: "Full-time",
-    location: "Remote",
-    technologies: ['csharp', 'aspnet', 'dotnet', 'sqlserver', 'javascript', 'bootstrap']
-  },
-  {
-    title: "Game Developer",
-    company: "The Breach Studios",
-    description: [
-      "Implementation of functionalities in client-server architectures using C# and unit testing.",
-      "Version control management and code review on GitHub.",
-      "Technical documentation and collaboration in agile teams using Scrum and Kanban.",
-    ],
-    date: "2021 - 2024",
-    employmentType: "Full-time",
-    location: "Remote",
-    technologies: ['cpp', 'unreal', 'csharp', 'unity_dark']
-  }
-];
+const EXPERIENCE = experienceEntries
+  .map((entry) => ({
+    ...entry.data,
+    technologies: (entry.data.technologies ?? []) as (keyof typeof TAGS)[],
+    description: entry.body.split("\n").filter((line) => line.trim() !== ""),
+  }))
+  .reverse();
 ---
 
-<ol class="relative mt-16 space-y-12">
-  {EXPERIENCE.map((experience) => (
-    <li class="group">
-      <ExperienceItem 
-        title={experience.title}
-        company={experience.company}
-        description={experience.description}
-        date={experience.date}
-        employmentType={experience.employmentType}
-        location={experience.location}
-        technologies={experience.technologies}
-      />
-    </li>
-  ))}
+<ol class="relative mt-16">
+  {
+    EXPERIENCE.map((experience) => (
+      <li class="group">
+        <ExperienceItem {...experience} />
+      </li>
+    ))
+  }
 </ol>

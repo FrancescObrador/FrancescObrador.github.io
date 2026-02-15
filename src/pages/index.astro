@@ -1,18 +1,19 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Icon } from 'astro-icon/components';
-import Experience from '../components/Experience.astro';
-import SectionContainer from '../components/SectionContainer.astro';
-import WorkProjects from '../components/WorkProjects.astro';
-import Hero from '../components/Hero.astro';
-import AboutMe from '../components/AboutMe.astro';
-import PersonalProjects from '../components/PersonalProjects.astro';
+import Layout from "../layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import Experience from "../components/Experience.astro";
+import SectionContainer from "../components/SectionContainer.astro";
+import Hero from "../components/Hero.astro";
+import AboutMe from "../components/AboutMe.astro";
+import UnifiedProjects from "../components/UnifiedProjects.astro";
+import SectionDivider from "../components/shared/SectionDivider.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
-<Layout 
-  title="Francesc Obrador - Software Developer" 
-  description="Full-stack developer specializing in .NET and React, with game development experience at Breach Studios"
->
+<Layout title={t("site.title")} description={t("site.description")}>
   <main class="px-4">
     <!-- Hero Section -->
     <SectionContainer class="py-16 md:py-24 lg:py-32">
@@ -23,54 +24,69 @@ import PersonalProjects from '../components/PersonalProjects.astro';
     <div class="space-y-24 md:space-y-32 lg:space-y-40 pb-24">
       <!-- Experience -->
       <SectionContainer id="experience">
-        <h2 class="flex items-center mb-8 text-3xl font-bold gap-x-3">
-          <Icon name="heroicons:briefcase" class="w-6 h-6 text-blue-500" />
-          <span class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-            Professional Experience
-          </span>
-        </h2>
-        <Experience />
+        <div class="reveal">
+          <h2 class="flex items-center mb-8 text-3xl font-bold gap-x-3">
+            <Icon name="heroicons:briefcase" class="w-6 h-6 text-blue-500" />
+            <span
+              class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent"
+            >
+              {t("section.experience")}
+            </span>
+          </h2>
+          <Experience />
+        </div>
       </SectionContainer>
+
+      <SectionDivider
+        variant="curve"
+        className="text-slate-100 dark:text-slate-800/30"
+      />
 
       <!-- Projects -->
       <SectionContainer id="projects">
         <div class="space-y-12">
-          <h2 class="flex items-center mb-8 text-3xl font-bold gap-x-3">
-            <Icon name="heroicons:code-bracket" class="w-6 h-6 text-purple-500" />
-            <span class="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
-              Projects & Contributions
-            </span>
-          </h2>
-          
-          <!-- Work Projects -->
-          <div class="space-y-8">
-            <h3 class="flex items-center text-2xl font-semibold gap-x-2 text-gray-800 dark:text-gray-200">
-              <Icon name="heroicons:building-office" class="w-5 h-5 text-blue-400" />
-              Professional Work
-            </h3>
-            <WorkProjects />
+          <div class="reveal">
+            <h2 class="flex items-center mb-8 text-3xl font-bold gap-x-3">
+              <Icon
+                name="heroicons:code-bracket"
+                class="w-6 h-6 text-purple-500"
+              />
+              <span
+                class="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent"
+              >
+                {t("section.projects")}
+              </span>
+            </h2>
           </div>
 
-          <!-- Personal Projects -->
-          <div class="space-y-8">
-            <h3 class="flex items-center text-2xl font-semibold gap-x-2 text-gray-800 dark:text-gray-200">
-              <Icon name="heroicons:user" class="w-5 h-5 text-green-400" />
-              Personal & Academic
-            </h3>
-            <PersonalProjects />
+          <div class="reveal">
+            <UnifiedProjects />
           </div>
         </div>
       </SectionContainer>
 
+      <SectionDivider
+        variant="wave"
+        className="text-slate-100 dark:text-slate-800/30"
+        flip={true}
+      />
+
       <!-- About Me -->
       <SectionContainer id="about-me">
-        <h2 class="flex items-center mb-8 text-3xl font-bold gap-x-3">
-          <Icon name="heroicons:user-circle" class="w-6 h-6 text-yellow-500" />
-          <span class="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-            About Me
-          </span>
-        </h2>
-        <AboutMe />
+        <div class="reveal">
+          <h2 class="flex items-center mb-8 text-3xl font-bold gap-x-3">
+            <Icon
+              name="heroicons:user-circle"
+              class="w-6 h-6 text-yellow-500"
+            />
+            <span
+              class="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent"
+            >
+              {t("section.about")}
+            </span>
+          </h2>
+          <AboutMe />
+        </div>
       </SectionContainer>
     </div>
   </main>

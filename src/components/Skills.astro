@@ -1,0 +1,100 @@
+---
+import { Icon } from "astro-icon/components";
+import { TAGS } from "../data/tags";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import TechStackItem from "./shared/TechStackItem.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const skillCategories = [
+    {
+        title: t("skills.game_dev"),
+        icon: "heroicons:cpu-chip",
+        color: "from-purple-500/20 to-indigo-500/20 text-purple-600 dark:text-purple-400",
+        skills: [
+            "unreal",
+            "unity_dark",
+            "csharp",
+            "cpp",
+        ] as (keyof typeof TAGS)[],
+    },
+    {
+        title: t("skills.frontend"),
+        icon: "heroicons:window",
+        color: "from-blue-500/20 to-cyan-500/20 text-blue-600 dark:text-blue-400",
+        skills: [
+            "javascript",
+            "typescript",
+            "html",
+            "css",
+            "tailwind",
+            "react",
+            "vue",
+            "angular",
+        ] as (keyof typeof TAGS)[],
+    },
+    {
+        title: t("skills.backend"),
+        icon: "heroicons:server",
+        color: "from-emerald-500/20 to-teal-500/20 text-emerald-600 dark:text-emerald-400",
+        skills: [
+            "nodejs",
+            "nestjs",
+            "dotnet",
+            "aspnet",
+            "java",
+            "spring",
+            "postgres",
+            "mysql",
+            "mongodb",
+        ] as (keyof typeof TAGS)[],
+    },
+    {
+        title: t("skills.tools"),
+        icon: "heroicons:wrench-screwdriver",
+        color: "from-orange-500/20 to-yellow-500/20 text-orange-600 dark:text-orange-400",
+        skills: [
+            "git",
+            "docker",
+            "aws_light",
+            "azure",
+            "postman",
+            "jest",
+        ] as (keyof typeof TAGS)[],
+    },
+];
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+    {
+        skillCategories.map((category) => (
+            <div
+                class={`reveal flex flex-col p-6 rounded-3xl bg-gradient-to-br ${category.color} border border-black/5 dark:border-white/5 shadow-sm`}
+            >
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-2 rounded-xl bg-white/50 dark:bg-black/20 shadow-sm">
+                        <Icon name={category.icon} class="w-6 h-6" />
+                    </div>
+                    <h3 class="text-xl font-bold tracking-tight">
+                        {category.title}
+                    </h3>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {category.skills.map((skillKey) => {
+                        const tag = TAGS[skillKey];
+                        return (
+                            <div class="flex items-center gap-2 p-2 rounded-xl bg-white/40 dark:bg-white/5 border border-black/5 dark:border-white/5 transition-transform hover:scale-105 select-none">
+                                <Icon name={tag.icon} class="w-5 h-5" />
+                                <span class="text-xs font-medium">
+                                    {tag.name}
+                                </span>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        ))
+    }
+</div>

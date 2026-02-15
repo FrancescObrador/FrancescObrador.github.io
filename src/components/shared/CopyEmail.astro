@@ -1,0 +1,87 @@
+---
+import { Icon } from "astro-icon/components";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+interface Props {
+    email: string;
+    class?: string;
+}
+
+const { email, class: className } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<div class={`flex items-center gap-2 group/copy ${className}`}>
+    <a href={`mailto:${email}`} class="hover:text-blue-500 transition-colors">
+        {email}
+    </a>
+    <button
+        class="copy-button p-1.5 rounded-lg bg-slate-200/50 dark:bg-slate-800/50 hover:bg-blue-500/10 hover:text-blue-500 transition-all active:scale-95 relative"
+        data-email={email}
+        data-text-copy={t("contact.copy_email")}
+        data-text-copied={t("contact.copied")}
+        title={t("contact.copy_email")}
+    >
+        <Icon name="heroicons:clipboard" class="w-4 h-4 copy-icon" />
+        <Icon name="heroicons:check" class="w-4 h-4 success-icon hidden" />
+
+        <span
+            class="tooltip invisible group-hover/copy:visible absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-[10px] bg-gray-900 text-white rounded whitespace-nowrap shadow-xl"
+        >
+            {t("contact.copy_email")}
+        </span>
+    </button>
+</div>
+
+<script>
+    function setupCopyButtons() {
+        const buttons = document.querySelectorAll(".copy-button");
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", async (e) => {
+                const btn = e.currentTarget as HTMLButtonElement;
+                const email = btn.dataset.email;
+                const textCopy = btn.dataset.textCopy || "";
+                const textCopied = btn.dataset.textCopied || "";
+                const copyIcon = btn.querySelector(".copy-icon");
+                const successIcon = btn.querySelector(".success-icon");
+                const tooltip = btn.querySelector(".tooltip");
+
+                if (email) {
+                    try {
+                        await navigator.clipboard.writeText(email);
+
+                        // Visual feedback
+                        copyIcon?.classList.add("hidden");
+                        successIcon?.classList.remove("hidden");
+                        if (tooltip) tooltip.textContent = textCopied;
+
+                        setTimeout(() => {
+                            copyIcon?.classList.remove("hidden");
+                            successIcon?.classList.add("hidden");
+                            if (tooltip) tooltip.textContent = textCopy;
+                        }, 2000);
+                    } catch (err) {
+                        console.error("Failed to copy: ", err);
+                    }
+                }
+            });
+        });
+    }
+
+    // Run on page load and after transitions
+    document.addEventListener("astro:page-load", setupCopyButtons);
+</script>
+
+<style>
+    .tooltip::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 4px solid transparent;
+        border-top-color: #111827;
+    }
+</style>

@@ -1,0 +1,84 @@
+---
+const sections = [
+    { id: "top", label: "Inicio", icon: "heroicons:home" },
+    { id: "experience", label: "Experiencia", icon: "heroicons:briefcase" },
+    { id: "projects", label: "Proyectos", icon: "heroicons:code-bracket" },
+    { id: "about-me", label: "Sobre mí", icon: "heroicons:user" },
+];
+---
+
+<nav
+    id="side-nav"
+    class="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4"
+>
+    {
+        sections.map((section) => (
+            <a
+                href={`#${section.id}`}
+                data-nav-id={section.id}
+                class="group relative flex items-center justify-center w-3 h-3 transition-all duration-300"
+                aria-label={`Saltar a ${section.label}`}
+            >
+                <span class="absolute right-full mr-4 px-2 py-1 rounded bg-slate-800 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                    {section.label}
+                </span>
+                <span class="nav-dot w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-blue-500 ring-4 ring-transparent group-hover:ring-blue-500/10 transition-all duration-300" />
+            </a>
+        ))
+    }
+</nav>
+
+<script>
+    const observerOptions = {
+        root: null,
+        rootMargin: "-50% 0px -50% 0px",
+        threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const id = entry.target.id || "top";
+                updateActiveDot(id);
+            }
+        });
+    }, observerOptions);
+
+    const updateActiveDot = (id: string) => {
+        document.querySelectorAll("[data-nav-id]").forEach((dot) => {
+            const dotInner = dot.querySelector(".nav-dot");
+            if (dot.getAttribute("data-nav-id") === id) {
+                dotInner?.classList.add(
+                    "bg-blue-500",
+                    "scale-150",
+                    "ring-blue-500/20",
+                );
+                dotInner?.classList.remove("bg-slate-300", "dark:bg-slate-700");
+            } else {
+                dotInner?.classList.remove(
+                    "bg-blue-500",
+                    "scale-150",
+                    "ring-blue-500/20",
+                );
+                dotInner?.classList.add("bg-slate-300", "dark:bg-slate-700");
+            }
+        });
+    };
+
+    // Observe all sections including the top (hero doesn't have an ID usually, we'll use top)
+    document
+        .querySelectorAll("section[id], main > section:first-child")
+        .forEach((section) => {
+            observer.observe(section);
+        });
+
+    // Special handle for the first section (Hero) if it doesn't have an ID
+    const hero = document.querySelector("section");
+    if (hero && !hero.id) hero.id = "top";
+</script>
+
+<style>
+    .nav-dot.scale-150 {
+        transform: scale(1.5);
+    }
+</style>

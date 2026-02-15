@@ -1,59 +1,84 @@
 ---
+import { useTranslations, getLangFromUrl } from "../i18n/utils";
+import { languages } from "../i18n/ui";
 import { Icon } from "astro-icon/components";
 import LinkInline from "./shared/LinkInline.astro";
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
 const navItems = [
   {
-    title: "Experience",
+    title: t("nav.experience"),
     label: "experience",
-    url: "/#experience",
-    icon: "heroicons:briefcase"
+    url: `/${lang === "es" ? "" : lang + "/"}#experience`,
+    icon: "heroicons:briefcase",
   },
   {
-    title: "Projects",
+    title: t("nav.projects"),
     label: "projects",
-    url: "/#projects",
-    icon: "heroicons:folder-open"
+    url: `/${lang === "es" ? "" : lang + "/"}#projects`,
+    icon: "heroicons:folder-open",
   },
   {
-    title: "About",
+    title: t("nav.about"),
     label: "about-me",
-    url: "/#about-me",
-    icon: "heroicons:user"
+    url: `/${lang === "es" ? "" : lang + "/"}#about-me`,
+    icon: "heroicons:user",
   },
-  {
-    title: "Contact",
-    label: "contact",
-    url: "mailto:obrador.francesc@gmail.com",
-    icon: "heroicons:envelope"
-  },
-]
+];
 ---
 
 <header class="fixed top-0 z-50 w-full">
-  <nav class="flex items-center justify-between px-4 py-3 mx-auto text-sm font-medium transition-all duration-300 max-w-7xl backdrop-blur-md bg-white/50 dark:bg-gray-800/30 rounded-2xl ring-1 ring-black/10 dark:ring-white/15 hover:ring-black/20 dark:hover:ring-white/30 shadow-sm hover:shadow-md">
+  <nav
+    class="flex items-center justify-between px-4 py-3 mx-auto text-sm font-medium transition-all duration-300 max-w-7xl backdrop-blur-md bg-white/50 dark:bg-gray-800/30 rounded-2xl ring-1 ring-black/10 dark:ring-white/15 hover:ring-black/20 dark:hover:ring-white/30 shadow-sm hover:shadow-md"
+  >
     <!-- Logo o nombre del sitio -->
-    <div class="text-lg font-semibold">
-     FrancescObrador.dev
-    </div>
+    <div class="text-lg font-semibold">FrancescObrador.dev</div>
 
     <!-- Menú para pantallas grandes -->
     <ul class="hidden md:flex gap-1 p-1 rounded-xl bg-black/5 dark:bg-white/5">
-      {navItems.map((link) => (
-        <li>
-          <LinkInline
-            href={link.url}
-            class="relative flex items-center gap-2 px-4 py-2 rounded-lg transition-colors hover:bg-black/5 dark:hover:bg-white/5 [&.active]:bg-blue-500/10 [&.active]:text-blue-600 dark:[&.active]:text-blue-400"
-            aria-label={link.label}
-            data-section={link.label}
-          >
-            <Icon name={link.icon} class="w-4 h-4" />
-            <span>{link.title}</span>
-            <div class="absolute bottom-0 left-1/2 w-[calc(100%-2rem)] h-0.5 -translate-x-1/2 bg-current opacity-0 transition-opacity group-hover/nav:opacity-10"></div>
-          </LinkInline>
-        </li>
-      ))}
-      
+      {
+        navItems.map((link) => (
+          <li>
+            <LinkInline
+              href={link.url}
+              class="relative flex items-center gap-2 px-4 py-2 rounded-lg transition-colors hover:bg-black/5 dark:hover:bg-white/5 [&.active]:bg-blue-500/10 [&.active]:text-blue-600 dark:[&.active]:text-blue-400"
+              aria-label={link.label}
+              data-section={link.label}
+            >
+              <Icon name={link.icon} class="w-4 h-4" />
+              <span>{link.title}</span>
+            </LinkInline>
+          </li>
+        ))
+      }
+
+      <!-- Traductor -->
+      <li class="relative group/lang">
+        <button
+          class="flex items-center gap-1 px-4 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors uppercase"
+        >
+          {lang}
+        </button>
+        <ul
+          class="absolute top-full right-0 hidden group-hover/lang:block bg-white dark:bg-gray-800 rounded-lg shadow-lg ring-1 ring-black/5 p-1 min-w-[120px]"
+        >
+          {
+            Object.entries(languages).map(([l, name]) => (
+              <li>
+                <a
+                  href={l === "es" ? "/" : `/${l}/`}
+                  class="block px-4 py-2 rounded-md hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-sm"
+                >
+                  {name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </li>
+
       <!-- Toggle de Tema -->
       <li>
         <button
@@ -61,8 +86,14 @@ const navItems = [
           class="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors group"
           aria-label="Toggle dark mode"
         >
-          <Icon name="heroicons:sun" class="w-5 h-5 dark:hidden text-yellow-500 group-hover:text-yellow-600" />
-          <Icon name="heroicons:moon" class="w-5 h-5 hidden dark:inline text-gray-500 group-hover:text-gray-600" />
+          <Icon
+            name="heroicons:sun"
+            class="w-5 h-5 dark:hidden text-yellow-500 group-hover:text-yellow-600"
+          />
+          <Icon
+            name="heroicons:moon"
+            class="w-5 h-5 hidden dark:inline text-gray-500 group-hover:text-gray-600"
+          />
         </button>
       </li>
     </ul>
@@ -78,22 +109,27 @@ const navItems = [
   </nav>
 
   <!-- Menú desplegable para móviles -->
-  <div id="mobile-menu" class="md:hidden fixed top-16 left-0 right-0 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg opacity-0 invisible transition-all transform -translate-y-5">
+  <div
+    id="mobile-menu"
+    class="md:hidden fixed top-16 left-0 right-0 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg opacity-0 invisible transition-all transform -translate-y-5"
+  >
     <ul class="flex flex-col gap-2">
-      {navItems.map((link) => (
-        <li>
-          <LinkInline
-            href={link.url}
-            class="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors hover:bg-black/5 dark:hover:bg-white/5 [&.active]:bg-blue-500/10 [&.active]:text-blue-600 dark:[&.active]:text-blue-400"
-            aria-label={link.label}
-            data-section={link.label}
-          >
-            <Icon name={link.icon} class="w-4 h-4" />
-            <span>{link.title}</span>
-          </LinkInline>
-        </li>
-      ))}
-      
+      {
+        navItems.map((link) => (
+          <li>
+            <LinkInline
+              href={link.url}
+              class="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors hover:bg-black/5 dark:hover:bg-white/5 [&.active]:bg-blue-500/10 [&.active]:text-blue-600 dark:[&.active]:text-blue-400"
+              aria-label={link.label}
+              data-section={link.label}
+            >
+              <Icon name={link.icon} class="w-4 h-4" />
+              <span>{link.title}</span>
+            </LinkInline>
+          </li>
+        ))
+      }
+
       <!-- Toggle de Tema en móviles -->
       <li>
         <button
@@ -101,10 +137,39 @@ const navItems = [
           class="flex items-center justify-center w-full px-4 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
           aria-label="Toggle dark mode"
         >
-          <Icon name="heroicons:sun" class="w-5 h-5 dark:hidden text-yellow-500" />
-          <Icon name="heroicons:moon" class="w-5 h-5 hidden dark:inline text-gray-500" />
+          <Icon
+            name="heroicons:sun"
+            class="w-5 h-5 dark:hidden text-yellow-500"
+          />
+          <Icon
+            name="heroicons:moon"
+            class="w-5 h-5 hidden dark:inline text-gray-500"
+          />
           <span class="ml-2">Cambiar tema</span>
         </button>
+      </li>
+
+      <!-- Selector de Idioma en móviles -->
+      <li class="border-t border-black/5 dark:border-white/5 pt-2 mt-2">
+        <div class="px-4 py-2 text-xs font-semibold uppercase text-gray-500">
+          Idioma
+        </div>
+        <div class="flex flex-wrap gap-2 px-4 pb-2">
+          {
+            Object.entries(languages).map(([l, name]) => (
+              <a
+                href={l === "es" ? "/" : `/${l}/`}
+                class={`px-3 py-1 rounded-full text-xs transition-colors ${
+                  lang === l
+                    ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 ring-1 ring-blue-500/20"
+                    : "bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10"
+                }`}
+              >
+                {name}
+              </a>
+            ))
+          }
+        </div>
       </li>
     </ul>
   </div>
@@ -112,58 +177,117 @@ const navItems = [
 
 <script is:inline>
   // Sistema de tema persistente
-  const themeKey = 'portfolio-theme'
-  
-  const getStoredTheme = () => localStorage.getItem(themeKey)
-  const setStoredTheme = theme => localStorage.setItem(themeKey, theme)
-  
+  const themeKey = "portfolio-theme";
+
+  const getStoredTheme = () => localStorage.getItem(themeKey);
+  const setStoredTheme = (theme) => localStorage.setItem(themeKey, theme);
+
   const applyTheme = (isDark) => {
-    document.documentElement.classList.toggle('dark', isDark)
-    setStoredTheme(isDark ? 'dark' : 'light')
-  }
-  
-  const toggleTheme = () => {
-    const isDark = !document.documentElement.classList.contains('dark')
-    applyTheme(isDark)
-  }
-  
+    document.documentElement.classList.toggle("dark", isDark);
+    setStoredTheme(isDark ? "dark" : "light");
+  };
+
+  const toggleTheme = (event) => {
+    const isDark = !document.documentElement.classList.contains("dark");
+
+    // Si el navegador no soporta View Transitions, aplicar normalmente
+    if (!document.startViewTransition) {
+      applyTheme(isDark);
+      return;
+    }
+
+    // Obtener las coordenadas del clic para el centro de la expansión
+    const transition = document.startViewTransition(() => applyTheme(isDark));
+
+    // Animación circular
+    const x = event?.clientX ?? window.innerWidth / 2;
+    const y = event?.clientY ?? window.innerHeight / 2;
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
+    );
+
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 400,
+          easing: "ease-in-out",
+          pseudoElement: "::view-transition-new(root)",
+        },
+      );
+    });
+  };
+
   // Inicialización del tema
   const initializeTheme = () => {
-    const savedTheme = getStoredTheme()
-    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    
+    const savedTheme = getStoredTheme();
+    const systemDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+
     if (savedTheme) {
-      applyTheme(savedTheme === 'dark')
+      applyTheme(savedTheme === "dark");
     } else {
-      applyTheme(systemDark)
+      applyTheme(systemDark);
     }
-  }
-  
+  };
+
   // Event listeners para el tema
-  document.addEventListener('DOMContentLoaded', initializeTheme)
-  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme)
-  document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme)
-  
+  document.addEventListener("astro:page-load", initializeTheme);
+  document
+    .getElementById("theme-toggle")
+    ?.addEventListener("click", (e) => toggleTheme(e));
+  document
+    .getElementById("theme-toggle-mobile")
+    ?.addEventListener("click", (e) => toggleTheme(e));
+
   // Sincronizar con cambios del sistema
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    if (!getStoredTheme()) applyTheme(e.matches)
-  })
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", (e) => {
+      if (!getStoredTheme()) applyTheme(e.matches);
+    });
 
   // Menú móvil
-  const mobileMenuButton = document.getElementById('mobile-menu-button')
-  const mobileMenu = document.getElementById('mobile-menu')
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
 
-  mobileMenuButton?.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.toggle('opacity-0')
-    mobileMenu.classList.toggle('invisible')
-    mobileMenu.classList.toggle('-translate-y-5')
-    mobileMenu.classList.toggle('translate-y-0')
-  })
+  mobileMenuButton?.addEventListener("click", () => {
+    const isOpen = mobileMenu.classList.toggle("opacity-0");
+    mobileMenu.classList.toggle("invisible");
+    mobileMenu.classList.toggle("-translate-y-5");
+    mobileMenu.classList.toggle("translate-y-0");
+  });
 </script>
+
+<style is:global>
+  /* Configuración necesaria para la transición circular */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+
+  ::view-transition-new(root) {
+    z-index: 999;
+  }
+</style>
 
 <style>
   #mobile-menu {
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
   }
 
   #mobile-menu.translate-y-0 {

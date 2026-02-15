@@ -1,7 +1,11 @@
 ---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import { Image } from "astro:assets";
-import SocialPill from "./shared/SocialPill.astro";
 import GradientText from "./shared/GradientText.astro";
+import SocialPill from "./shared/SocialPill.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const personalImageAlt = "Francesc Obrador - Software Developer";
 ---
@@ -17,19 +21,6 @@ const personalImageAlt = "Francesc Obrador - Software Developer";
         class="object-cover w-32 h-32 rounded-2xl shadow-xl ring-1 ring-black/10 dark:ring-white/20 bg-black/5 dark:bg-white/5"
       />
     </div>
-
-    <!-- <a
-      href="https://linkedin.com/in/francesc-obrador"
-      target="_blank"
-      rel="noopener"
-      class="flex items-center px-4 py-2 text-sm font-medium transition-all bg-yellow-400/10 text-yellow-600 dark:text-yellow-400 rounded-full hover:bg-yellow-400/20"
-    >
-      <span class="relative flex h-2 w-2 mr-2">
-        <span class="absolute inline-flex w-full h-full bg-yellow-400 rounded-full opacity-75 animate-ping"></span>
-        <span class="relative inline-flex w-2 h-2 bg-yellow-500 rounded-full"></span>
-      </span>
-      Open to work
-    </a> -->
   </div>
 
   <div class="space-y-4">
@@ -37,45 +28,51 @@ const personalImageAlt = "Francesc Obrador - Software Developer";
       class="text-4xl font-bold tracking-tight text-gray-800 dark:text-white sm:text-5xl"
     >
       <GradientText from="from-blue-400" to="to-blue-600"
-        >Hey, I'm Francesc</GradientText
+        >{t("hero.title")}</GradientText
       >
     </h1>
 
-    <div class="p-4 rounded-xl bg-black/5 dark:bg-white/5 ring-1 ring-black/10 dark:ring-white/20">
-      <p class="text-xl leading-relaxed text-gray-800 dark:text-gray-300">
-        <span class="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent font-semibold">
-          Full-stack developer
-        </span> specializing in 
-        <span class="font-medium text-blue-600 dark:text-blue-400">Web development</span>.
-        Former game programmer at Breach Studios, now seeking to apply my skills in
-        building scalable web applications and interactive experiences.
-      </p>
+    <div
+      class="p-4 rounded-xl bg-black/5 dark:bg-white/5 ring-1 ring-black/10 dark:ring-white/20"
+    >
+      <div class="text-xl leading-relaxed text-slate-800 dark:text-gray-300">
+        <span
+          class="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent font-semibold"
+        >
+          {t("hero.role")}
+        </span>
+        {t("hero.specializing")}
+        <span class="font-medium text-blue-600 dark:text-blue-400"
+          >{t("hero.webdev")}</span
+        >.
+        <span set:html={t("hero.description")} />
+      </div>
+
+      <nav class="flex flex-wrap gap-3 mt-6">
+        <SocialPill
+          href="https://linkedin.com/in/francesc-obrador"
+          icon="social/linkedin"
+          class="bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20"
+        >
+          LinkedIn
+        </SocialPill>
+
+        <SocialPill
+          href="https://github.com/FrancescObrador"
+          icon="social/github"
+          class="bg-gray-500/10 text-gray-600 dark:text-gray-400 hover:bg-gray-500/20"
+        >
+          GitHub
+        </SocialPill>
+
+        <SocialPill
+          href="/documents/cv.pdf"
+          icon="heroicons:document-arrow-down"
+          class="bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-500/20"
+        >
+          My CV
+        </SocialPill>
+      </nav>
     </div>
-
-    <nav class="flex flex-wrap gap-3 mt-6">
-      <SocialPill
-        href="https://linkedin.com/in/francesc-obrador"
-        icon="social/linkedin"
-        class="bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20"
-      >
-        LinkedIn
-      </SocialPill>
-
-      <SocialPill
-        href="https://github.com/FrancescObrador"
-        icon="social/github"
-        class="bg-gray-500/10 text-gray-600 dark:text-gray-400 hover:bg-gray-500/20"
-      >
-        GitHub
-      </SocialPill>
-
-      <SocialPill
-        href="/documents/cv.pdf"
-        icon="heroicons:document-arrow-down"
-        class="bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-500/20"
-      >
-        My CV
-      </SocialPill>
-    </nav>
   </div>
 </div>

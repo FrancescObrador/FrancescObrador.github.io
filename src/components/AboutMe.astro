@@ -1,155 +1,104 @@
 ---
 import { Icon } from "astro-icon/components";
-import { TAGS } from "../data/tags";
 import SectionHeading from "./SectionHeading.astro";
 import Card from "./shared/Card.astro";
 import GradientText from "./shared/GradientText.astro";
 import IconBadge from "./shared/IconBadge.astro";
-import TechStackItem from "./shared/TechStackItem.astro";
+import Skills from "./Skills.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
-const myTechStack: (keyof typeof TAGS)[] = [
-  // Game Development
-  "unreal",
-  "unity_dark",
-  "csharp",
-  "cpp",
-
-  // Core Web
-  "javascript",
-  "typescript",
-  "html",
-  "css",
-  "tailwind",
-  "daisyui",
-
-  // Frontend Frameworks
-  "react",
-  "vue",
-  "angular",
-  "redux",
-  "reactrouter",
-  "vitejs",
-  "bootstrap",
-
-  // Backend & Fullstack
-  "dotnet",
-  "aspnet",
-  "nodejs",
-  "nestjs",
-  "spring",
-  "java",
-
-  // Databases
-  "sqlserver",
-  "postgres",
-  "mysql",
-  "mongodb",
-  "typeorm",
-
-  // DevOps & Cloud
-  "docker",
-  "azure",
-  "firebase",
-  "aws_light",
-
-  // Tools & Utilities
-  "git",
-  "jest",
-  "postman",
-
-  // Mobile & Otros
-  "swift",
-];
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
-<article class="grid gap-8 text-gray-700 dark:text-gray-300">
-  <div class="space-y-6">
-    <SectionHeading title="Francesc Obrador" subtitle="Full-Stack Developer">
+<article class="grid gap-8 text-slate-700 dark:text-slate-300">
+  <div class="space-y-6 reveal">
+    <SectionHeading title={t("about.title")} subtitle={t("about.subtitle")}>
       <GradientText from="from-blue-400" to="to-blue-600" class="text-3xl">
-        Francesc Obrador
+        {t("about.title")}
       </GradientText>
-      <p class="text-lg font-medium text-gray-600 dark:text-gray-400">
-        Full-Stack Developer · Technical Problem Solver · Continuous Learner
+      <p class="text-lg font-medium text-slate-600 dark:text-slate-400">
+        {t("about.subtitle")}
       </p>
     </SectionHeading>
 
     <div class="space-y-8">
-      <div class="prose prose-lg dark:prose-invert max-w-none">
-        <p class="text-pretty">
-          👋 Full-stack developer with 3+ years of hands-on experience crafting
-          robust solutions. Currently advancing skills through a Master's in Web
-          Development while contributing to open-source projects and personal
-          initiatives.
-        </p>
-      </div>
-
-      <Card>
-        <div class="space-y-6">
-          <h2
-            class="flex items-center gap-2 font-mono text-sm text-blue-500 dark:text-blue-400"
-          >
-            <Icon name="heroicons:star" class="w-5 h-5" />
-            Key Highlights
-          </h2>
-          <ul class="space-y-4">
-            <li>
-              <IconBadge icon="heroicons:map" color="text-purple-500">
-                Created engaging Fortnite Creative experiences with 950K+ play
-                minutes
-              </IconBadge>
-            </li>
-            <li>
-              <IconBadge icon="heroicons:academic-cap" color="text-green-500">
-                Developed academic management systems using ASP.NET Core + React
-              </IconBadge>
-            </li>
-            <li>
-              <IconBadge icon="heroicons:users" color="text-orange-500">
-                Collaborated in Agile teams to deliver 5+ production-ready
-                applications
-              </IconBadge>
-            </li>
-          </ul>
+      <div class="reveal space-y-8">
+        <div
+          class="p-6 rounded-3xl bg-slate-100/40 dark:bg-slate-800/20 border border-slate-200/50 dark:border-slate-700/30"
+        >
+          <p class="text-pretty">
+            {t("about.description")}
+          </p>
         </div>
-      </Card>
 
-      <div class="space-y-6">
-        <h3 class="flex items-center gap-2 text-xl font-semibold">
-          <Icon
-            name="heroicons:wrench-screwdriver"
-            class="w-6 h-6 text-blue-500"
-          />
-          Technical Toolkit
-        </h3>
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-3">
-          {
-            myTechStack.map((tagKey) => {
-              const tag = TAGS[tagKey];
-              return <TechStackItem icon={tag.icon} name={tag.name} />;
-            })
-          }
+        <div class="reveal">
+          <Card>
+            <div class="space-y-6">
+              <h2
+                class="flex items-center gap-2 font-mono text-sm text-blue-500 dark:text-blue-400"
+              >
+                <Icon name="heroicons:star" class="w-5 h-5" />
+                {t("about.highlights")}
+              </h2>
+              <ul class="space-y-4">
+                <li>
+                  <IconBadge icon="heroicons:map" color="text-purple-500">
+                    {t("about.highlight1")}
+                  </IconBadge>
+                </li>
+                <li>
+                  <IconBadge
+                    icon="heroicons:academic-cap"
+                    color="text-green-500"
+                  >
+                    {t("about.highlight2")}
+                  </IconBadge>
+                </li>
+                <li>
+                  <IconBadge icon="heroicons:users" color="text-orange-500">
+                    {t("about.highlight3")}
+                  </IconBadge>
+                </li>
+              </ul>
+            </div>
+          </Card>
+        </div>
+
+        <div class="space-y-6 reveal mt-12">
+          <h3 class="flex items-center gap-2 text-xl font-semibold">
+            <Icon
+              name="heroicons:wrench-screwdriver"
+              class="w-6 h-6 text-blue-500"
+            />
+            {t("about.toolkit")}
+          </h3>
+          <Skills />
         </div>
       </div>
-    </div>
 
-    <div class="flex flex-wrap gap-4 mt-8">
-      <a href="#projects" class="cta-button">
-        <Icon name="heroicons:folder-open" class="w-5 h-5" />
-        View Projects
-      </a>
-      <a href="https://github.com/francescobrador" class="cta-button secondary">
-        <Icon name="heroicons:command-line" class="w-5 h-5" />
-        Explore GitHub
-      </a>
+      <div class="flex flex-wrap gap-4 mt-8 reveal">
+        <a href="#projects" class="cta-button">
+          <Icon name="heroicons:folder-open" class="w-5 h-5" />
+          {t("about.view_projects")}
+        </a>
+        <a
+          href="https://github.com/francescobrador"
+          class="cta-button secondary"
+        >
+          <Icon name="heroicons:command-line" class="w-5 h-5" />
+          {t("about.explore_github")}
+        </a>
+      </div>
     </div>
   </div>
-</article>
 
-<style>
-  .cta-button {
-    @apply inline-flex items-center gap-2 px-6 py-3 text-sm font-medium transition-colors rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20;
-  }
-  .cta-button.secondary {
-    @apply bg-gray-500/10 text-gray-600 dark:text-gray-400 hover:bg-gray-500/20;
-  }
-</style>
+  <style>
+    .cta-button {
+      @apply inline-flex items-center gap-2 px-6 py-3 text-sm font-medium transition-colors rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20;
+    }
+    .cta-button.secondary {
+      @apply bg-gray-500/10 text-gray-600 dark:text-gray-400 hover:bg-gray-500/20;
+    }
+  </style>
+</article>

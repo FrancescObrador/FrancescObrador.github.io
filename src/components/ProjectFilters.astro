@@ -1,0 +1,128 @@
+---
+import { TAGS } from "../data/tags";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Get all unique tags from available TAGS for filtering (or a subset)
+const filterTags = [
+    "react",
+    "typescript",
+    "cpp",
+    "unreal",
+    "unity_dark",
+] as (keyof typeof TAGS)[];
+---
+
+<div class="project-filters space-y-6">
+    {/* Category Filters */}
+    <div class="flex flex-wrap gap-2">
+        <button
+            class="filter-btn active px-4 py-2 rounded-full text-sm font-medium transition-all bg-blue-500 text-white shadow-lg shadow-blue-500/20 select-none"
+            data-filter="all"
+        >
+            {t("projects.all")}
+        </button>
+        <button
+            class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all bg-slate-200/50 dark:bg-slate-800/50 hover:bg-slate-300/50 dark:hover:bg-slate-700/50 select-none"
+            data-filter="work"
+        >
+            {t("projects.work")}
+        </button>
+        <button
+            class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all bg-slate-200/50 dark:bg-slate-800/50 hover:bg-slate-300/50 dark:hover:bg-slate-700/50 select-none"
+            data-filter="personal"
+        >
+            {t("projects.personal")}
+        </button>
+    </div>
+
+    {/* Tech Filters */}
+    <div class="flex flex-wrap gap-2">
+        <span
+            class="w-full text-xs font-semibold uppercase text-slate-500 mb-1 select-none"
+            >{t("projects.filter_tech")}</span
+        >
+        {
+            filterTags.map((tagKey) => (
+                <button
+                    class="tech-filter-btn px-3 py-1 rounded-lg text-xs font-medium transition-all border border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-900/50 hover:border-blue-500/50 select-none"
+                    data-tech={tagKey}
+                >
+                    {TAGS[tagKey].name}
+                </button>
+            ))
+        }
+    </div>
+</div>
+
+<script>
+    function setupFilters() {
+        const filterBtns = document.querySelectorAll(".filter-btn");
+        const techBtns = document.querySelectorAll(".tech-filter-btn");
+        const projects = document.querySelectorAll(".project-item");
+
+        let currentCategory = "all";
+        let currentTech: string | null = null;
+
+        function applyFilters() {
+            projects.forEach((project) => {
+                const category = project.getAttribute("data-category");
+                const tags = JSON.parse(
+                    project.getAttribute("data-tags") || "[]",
+                );
+
+                const categoryMatch =
+                    currentCategory === "all" || category === currentCategory;
+                const techMatch = !currentTech || tags.includes(currentTech);
+
+                if (categoryMatch && techMatch) {
+                    (project as HTMLElement).style.display = "block";
+                    // Trigger reveal again for new visible items
+                    project.classList.add("visible");
+                } else {
+                    (project as HTMLElement).style.display = "none";
+                }
+            });
+        }
+
+        filterBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                filterBtns.forEach((b) =>
+                    b.classList.remove("active", "bg-blue-500", "text-white"),
+                );
+                btn.classList.add("active", "bg-blue-500", "text-white");
+                currentCategory = (btn as HTMLElement).dataset.filter || "all";
+                applyFilters();
+            });
+        });
+
+        techBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                if (btn.classList.contains("active")) {
+                    btn.classList.remove("active", "ring-2", "ring-blue-500");
+                    currentTech = null;
+                } else {
+                    techBtns.forEach((b) =>
+                        b.classList.remove("active", "ring-2", "ring-blue-500"),
+                    );
+                    btn.classList.add("active", "ring-2", "ring-blue-500");
+                    currentTech = (btn as HTMLElement).dataset.tech || null;
+                }
+                applyFilters();
+            });
+        });
+    }
+
+    document.addEventListener("astro:page-load", setupFilters);
+</script>
+
+<style>
+    .filter-btn.active {
+        @apply bg-blue-500 text-white shadow-lg shadow-blue-500/20;
+    }
+    .tech-filter-btn.active {
+        @apply border-blue-500 bg-blue-500/10 text-blue-600 dark:text-blue-400;
+    }
+</style>

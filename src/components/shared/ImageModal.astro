@@ -1,0 +1,84 @@
+---
+
+---
+
+<div
+    id="image-modal"
+    class="fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 bg-slate-950/90 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+>
+    <button
+        id="close-modal"
+        class="absolute top-6 right-6 p-2 text-white/50 hover:text-white transition-colors z-50"
+        aria-label="Close modal"
+    >
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-8 h-8"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
+
+    <div
+        class="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center"
+    >
+        <img
+            id="modal-image"
+            src=""
+            alt=""
+            class="max-w-full max-h-full object-contain rounded-lg shadow-2xl scale-95 transition-transform duration-300"
+        />
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById("image-modal");
+    const modalImg = document.getElementById("modal-image") as HTMLImageElement;
+    const closeBtn = document.getElementById("close-modal");
+
+    const openModal = (src: string, alt: string) => {
+        if (!modal || !modalImg) return;
+        modalImg.src = src;
+        modalImg.alt = alt;
+        modal.classList.remove("opacity-0", "pointer-events-none");
+        document.body.style.overflow = "hidden";
+
+        // Trigger scale animation
+        setTimeout(() => {
+            modalImg.classList.remove("scale-95");
+            modalImg.classList.add("scale-100");
+        }, 10);
+    };
+
+    const closeModal = () => {
+        if (!modal || !modalImg) return;
+        modal.classList.add("opacity-0", "pointer-events-none");
+        modalImg.classList.remove("scale-100");
+        modalImg.classList.add("scale-95");
+        document.body.style.overflow = "";
+    };
+
+    // Listen for custom event
+    window.addEventListener("open-lightbox", ((e: CustomEvent) => {
+        const { src, alt } = e.detail;
+        openModal(src, alt);
+    }) as EventListener);
+
+    closeBtn?.addEventListener("click", closeModal);
+    modal?.addEventListener("click", (e) => {
+        if (e.target !== modalImg) closeModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+    });
+</script>

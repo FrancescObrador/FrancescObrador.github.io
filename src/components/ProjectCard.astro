@@ -1,65 +1,195 @@
 ---
 import { Icon } from "astro-icon/components";
-import Image from "astro/components/Image.astro";
+import { Image } from "astro:assets";
 import LinkButton from "./shared/LinkButton.astro";
 import GradientText from "./shared/GradientText.astro";
 import TechStackItem from "./shared/TechStackItem.astro";
+import { TAGS } from "../data/tags";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
-const { image, title, description, tags, link, github } = Astro.props;
+const { image, title, description, tags, link, github, type } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
-<article class="group grid md:grid-cols-2 gap-8 p-6 rounded-2xl bg-white/50 dark:bg-gray-800/30 ring-1 ring-black/10 dark:ring-white/15 hover:ring-black/20 dark:hover:ring-white/30 transition-all duration-300">
+<article
+  class="project-item group grid md:grid-cols-2 gap-8 p-6 rounded-2xl bg-slate-100/40 dark:bg-slate-800/30 ring-1 ring-slate-200 dark:ring-slate-800/50 hover:ring-slate-300 dark:hover:ring-slate-700 transition-all duration-300"
+  data-category={type}
+  data-tags={JSON.stringify(tags)}
+>
   {/* Contenedor con aspect-ratio fijo 16:9 */}
-  <div class="relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow aspect-[16/9]">
+  <div
+    class="relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow aspect-[16/9] cursor-zoom-in group/image skeleton"
+    data-lightbox-trigger
+    data-src={image.src}
+    data-alt={title}
+  >
     <Image
-      width={1600}
-      height={900}
       alt={`${title} project screenshot`}
-      class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+      class="project-image object-cover w-full h-full transition-all duration-700 opacity-0 group-hover/image:scale-105"
       loading="lazy"
       src={image}
+      onload="const img = this; setTimeout(() => { img.classList.remove('opacity-0'); img.closest('.skeleton')?.classList.remove('skeleton'); }, 50)"
     />
+    <script is:inline>
+      // Immediate check for cached images
+      {
+        const img = document.currentScript.previousElementSibling;
+        if (img && img.complete) {
+          img.classList.remove("opacity-0");
+          img.parentElement.classList.remove("skeleton");
+        }
+      }
+    </script>
+    {/* Overlay sutil al hacer hover */}
+    <div
+      class="absolute inset-0 bg-black/0 group-hover/image:bg-black/10 transition-colors flex items-center justify-center"
+    >
+      <Icon
+        name="heroicons:magnifying-glass-plus"
+        class="w-10 h-10 text-white opacity-0 group-hover/image:opacity-100 transition-opacity drop-shadow-lg"
+      />
+    </div>
   </div>
 
   {/* Resto del contenido igual */}
   <div class="flex flex-col justify-between">
     <div class="space-y-6">
       <div>
-        <GradientText from="from-blue-400" to="to-blue-600" class="text-2xl font-bold mb-4">
+        <GradientText
+          from="from-blue-400"
+          to="to-blue-600"
+          class="text-2xl font-bold mb-4"
+        >
           {title}
         </GradientText>
-        
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-2 mt-2 mb-6">
-          {tags.map((tag: any) => (
-            <TechStackItem icon={tag.icon} name={tag.name} />
-          ))}
+
+        <div
+          class="grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-2 mt-2 mb-6"
+        >
+          {
+            tags.map((tagKey: keyof typeof TAGS) => {
+              const tag = TAGS[tagKey];
+              return <TechStackItem icon={tag.icon} name={tag.name} />;
+            })
+          }
         </div>
       </div>
 
-      <p class="text-pretty leading-relaxed text-gray-600 dark:text-gray-300">
-        {description}
-      </p>
+      <p
+        class="text-pretty leading-relaxed text-slate-600 dark:text-slate-300"
+        set:html={description}
+      />
     </div>
 
     <div class="flex flex-wrap gap-3 mt-6">
-      {github && (
-        <LinkButton 
-          href={github}
-          class="bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20"
-        >
-          <Icon name="social/github" class="size-5" />
-          View Code
-        </LinkButton>
-      )}
-      {link && (
-        <LinkButton
-          href={link}
-          class="bg-gray-500/10 text-gray-600 dark:text-gray-400 hover:bg-gray-500/20"
-        >
-          <Icon name="items/link" class="size-5" />
-          Live Preview
-        </LinkButton>
-      )}
+      {
+        github && (
+          <LinkButton
+            href={github}
+            class="bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20"
+          >
+            <Icon name="social/github" class="size-5" />
+            {t("projects.view_code")}
+          </LinkButton>
+        )
+      }
+      {
+        link && (
+          <LinkButton
+            href={link}
+            class="bg-slate-500/10 text-slate-600 dark:text-slate-400 hover:bg-slate-500/20"
+          >
+            <Icon name="items/link" class="size-5" />
+            {t("projects.live_preview")}
+          </LinkButton>
+        )
+      }
     </div>
   </div>
 </article>
+
+<script>
+  // 3D Tilt Effect
+  const cards = document.querySelectorAll(".project-item");
+
+  cards.forEach((card) => {
+    const el = card as HTMLElement;
+    let frameId: number | null = null;
+
+    const handleMove = (e: MouseEvent) => {
+      if (frameId) cancelAnimationFrame(frameId);
+
+      frameId = requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -5; // Max 5 deg
+        const rotateY = ((x - centerX) / centerX) * 5;
+
+        el.style.setProperty("--rotate-x", `${rotateX}deg`);
+        el.style.setProperty("--rotate-y", `${rotateY}deg`);
+        el.style.setProperty("--glare-opacity", "0.1");
+        el.style.setProperty("--glare-x", `${(x / rect.width) * 100}%`);
+        el.style.setProperty("--glare-y", `${(y / rect.height) * 100}%`);
+      });
+    };
+
+    const handleLeave = () => {
+      if (frameId) cancelAnimationFrame(frameId);
+      el.style.setProperty("--rotate-x", "0deg");
+      el.style.setProperty("--rotate-y", "0deg");
+      el.style.setProperty("--glare-opacity", "0");
+    };
+
+    // Solo activar en dispositivos con puntero (no táctiles) para rendimiento
+    if (window.matchMedia("(pointer: fine)").matches) {
+      el.addEventListener("mousemove", handleMove);
+      el.addEventListener("mouseleave", handleLeave);
+    }
+  });
+
+  // Lightbox Trigger Logic
+  const triggers = document.querySelectorAll("[data-lightbox-trigger]");
+  triggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      const src = trigger.getAttribute("data-src");
+      const alt = trigger.getAttribute("data-alt");
+
+      window.dispatchEvent(
+        new CustomEvent("open-lightbox", {
+          detail: { src, alt },
+        }),
+      );
+    });
+  });
+</script>
+
+<style>
+  .project-item {
+    transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+      rotateY(var(--rotate-y, 0deg));
+    transition:
+      transform 0.1s ease-out,
+      box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      circle at var(--glare-x, 0%) var(--glare-y, 0%),
+      rgba(255, 255, 255, var(--glare-opacity, 0)) 0%,
+      transparent 70%
+    );
+    z-index: 10;
+  }
+</style>
