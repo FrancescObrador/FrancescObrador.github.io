@@ -1,7 +1,7 @@
 ---
 title: "Web Developer"
 company: "NTT Data"
-date: "2025 - Present"
+date: "2025 - Presente"
 startDate: "2025-04-01"
 employmentType: "Jornada completa"
 location: "Remoto"

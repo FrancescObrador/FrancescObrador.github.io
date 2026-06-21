@@ -53,7 +53,7 @@ export const ui = {
         'contact.copied': '¡Copiado!',
         'footer.built_with': 'Hecho con Astro ♡',
         'site.title': 'Francesc Obrador - Desarrollador de Software',
-        'site.description': 'Desarrollador full-stack especializado en .NET y React, con experiencia en desarrollo de videojuegos en Breach Studios.',
+        'site.description': 'Desarrollador full-stack especializado en .NET y React, con experiencia en desarrollo de videojuegos en The Breach Studios.',
     },
     en: {
         'nav.experience': 'Experience',
@@ -101,7 +101,7 @@ export const ui = {
         'contact.copied': 'Copied!',
         'footer.built_with': 'Built with Astro ♡',
         'site.title': 'Francesc Obrador - Software Developer',
-        'site.description': 'Full-stack developer specializing in .NET and React, with game development experience at Breach Studios.',
+        'site.description': 'Full-stack developer specializing in .NET and React, with game development experience at The Breach Studios.',
     },
     ca: {
         'nav.experience': 'Experiència',
@@ -122,7 +122,7 @@ export const ui = {
         'section.work_projects': 'Treball Professional',
         'section.personal_projects': 'Personal i Acadèmic',
         'section.about': 'Sobre mi',
-        'about.title': 'Sobre mi',
+        'about.title': 'Francesc Obrador',
         'about.subtitle': 'Desenvolupador Full-Stack',
         'hero.cv': 'El meu CV',
         'about.description': 'Desenvolupador Full-Stack amb més de <span data-exp-years>3</span> anys d\'experiència professional entre el desenvolupament de videojocs i sistemes web. Vaig passar de construir sistemes multijugador en temps real a The Breach Studios a desenvolupar i mantenir aplicacions web en producció a <strong>NTT Data</strong>, portant una mentalitat de rendiment i atenció al detall en tots dos àmbits. El meu treball de backend se centra en <strong>.NET</strong>, complementat amb <strong>React</strong> en projectes personals i acadèmics.',
@@ -149,6 +149,6 @@ export const ui = {
         'contact.copied': 'Copiat!',
         'footer.built_with': 'Fet amb Astro ♡',
         'site.title': 'Francesc Obrador - Desenvolupador de Programari',
-        'site.description': 'Desenvolupador full-stack especialitzat en .NET i React, amb experiència en desenvolupament de videojocs a Breach Studios.',
+        'site.description': 'Desenvolupador full-stack especialitzat en .NET i React, amb experiència en desenvolupament de videojocs a The Breach Studios.',
     },
 } as const;
