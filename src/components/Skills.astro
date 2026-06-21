@@ -9,17 +9,6 @@ const t = useTranslations(lang);
 
 const skillCategories = [
     {
-        title: t("skills.game_dev"),
-        icon: "heroicons:cpu-chip",
-        color: "from-purple-500/20 to-indigo-500/20 text-purple-600 dark:text-purple-400",
-        skills: [
-            "unreal",
-            "unity_dark",
-            "csharp",
-            "cpp",
-        ] as (keyof typeof TAGS)[],
-    },
-    {
         title: t("skills.frontend"),
         icon: "heroicons:window",
         color: "from-blue-500/20 to-cyan-500/20 text-blue-600 dark:text-blue-400",
@@ -30,7 +19,6 @@ const skillCategories = [
             "css",
             "tailwind",
             "react",
-            "vue",
             "angular",
         ] as (keyof typeof TAGS)[],
     },
@@ -40,14 +28,10 @@ const skillCategories = [
         color: "from-emerald-500/20 to-teal-500/20 text-emerald-600 dark:text-emerald-400",
         skills: [
             "nodejs",
-            "nestjs",
             "dotnet",
             "aspnet",
-            "java",
-            "spring",
             "postgres",
-            "mysql",
-            "mongodb",
+            "azure",
         ] as (keyof typeof TAGS)[],
     },
     {
@@ -57,10 +41,18 @@ const skillCategories = [
         skills: [
             "git",
             "docker",
-            "aws_light",
-            "azure",
             "postman",
-            "jest",
+        ] as (keyof typeof TAGS)[],
+    },
+    {
+        title: t("skills.game_dev"),
+        icon: "heroicons:cpu-chip",
+        color: "from-purple-500/20 to-indigo-500/20 text-purple-600 dark:text-purple-400",
+        skills: [
+            "unreal",
+            "unity_dark",
+            "csharp",
+            "cpp",
         ] as (keyof typeof TAGS)[],
     },
 ];

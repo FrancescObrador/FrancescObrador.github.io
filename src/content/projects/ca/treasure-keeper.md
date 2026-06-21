@@ -1,6 +1,6 @@
 ---
 title: "Treasure Keeper"
-description: "Un joc clicker incremental desenvolupat i publicat a Google Play Store. Dissenyat amb mecàniques atractives i progressió incremental per mantenir els jugadors enganxats."
+description: "Publicat de forma independent a Google Play Store — dissenyat, desenvolupat i llançat d'extrem a extrem amb Unity i C#. Un clicker incremental que cobreix el cicle de producte complet des del concepte fins a la publicació a la botiga."
 image: "../../../assets/images/treasure-keeper.webp"
 tags: ["unity_dark", "csharp"]
 type: "personal"

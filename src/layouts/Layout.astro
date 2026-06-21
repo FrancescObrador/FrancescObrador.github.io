@@ -1,9 +1,8 @@
 ---
-import { getLangFromUrl } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ImageModal from "../components/shared/ImageModal.astro";
-import SideNav from "../components/shared/SideNav.astro";
 import { ViewTransitions } from "astro:transitions";
 import "@fontsource-variable/inter";
 
@@ -14,6 +13,7 @@ interface Props {
 
 const { description, title } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <!doctype html>
@@ -106,35 +106,16 @@ const lang = getLangFromUrl(Astro.url);
           .forEach((el) => observer.observe(el));
       };
 
-      // Micro-interactions scroll logic
       const handleScroll = () => {
         const winScroll =
           document.body.scrollTop || document.documentElement.scrollTop;
-        const height =
-          document.documentElement.scrollHeight -
-          document.documentElement.clientHeight;
-        const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-
-        // Update reading progress
-        const progressBar = document.getElementById("reading-progress");
-        if (progressBar) progressBar.style.width = scrolled + "%";
-
-        // Update Back to Top button
         const backToTop = document.getElementById("back-to-top");
-        const progressCircle = document.getElementById("back-to-top-progress");
-
         if (backToTop) {
           if (winScroll > 300) {
             backToTop.classList.remove("translate-y-20", "opacity-0");
           } else {
             backToTop.classList.add("translate-y-20", "opacity-0");
           }
-        }
-
-        if (progressCircle) {
-          const circumference = 138.23;
-          const offset = circumference - (scrolled / 100) * circumference;
-          progressCircle.style.strokeDashoffset = offset.toString();
         }
       };
 
@@ -159,16 +140,12 @@ const lang = getLangFromUrl(Astro.url);
         setupBackToTop();
       });
     </script>
+  <script data-goatcounter="https://francescobrador.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   </head>
 
   <body
     class="relative bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-50"
   >
-    <div
-      id="reading-progress"
-      class="fixed top-0 left-0 w-0 h-1 bg-blue-500 z-[60] transition-all duration-150"
-    >
-    </div>
     <div class="background-overlay"></div>
 
     <Header />
@@ -179,12 +156,11 @@ const lang = getLangFromUrl(Astro.url);
 
     <Footer />
     <ImageModal />
-    <SideNav />
 
     <button
       id="back-to-top"
       class="fixed bottom-6 left-6 z-40 p-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-lg translate-y-20 opacity-0 transition-all duration-500 hover:scale-110 active:scale-95 group"
-      aria-label="Volver arriba"
+      aria-label={t("nav.back_to_top")}
     >
       <svg
         class="size-6 text-slate-600 dark:text-slate-400 group-hover:text-blue-500 transition-colors"
@@ -197,20 +173,6 @@ const lang = getLangFromUrl(Astro.url);
           stroke-linejoin="round"
           stroke-width="2"
           d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-      </svg>
-      {/* Círculo de progreso sutil */}
-      <svg class="absolute inset-0 size-full -rotate-90 pointer-events-none">
-        <circle
-          id="back-to-top-progress"
-          cx="24"
-          cy="24"
-          r="22"
-          stroke="currentColor"
-          stroke-width="2"
-          fill="transparent"
-          class="text-blue-500/20"
-          stroke-dasharray="138.23"
-          stroke-dashoffset="138.23"></circle>
       </svg>
     </button>
 
@@ -232,65 +194,35 @@ const lang = getLangFromUrl(Astro.url);
       .background-overlay::after {
         content: "";
         position: absolute;
-        width: 100vmax;
-        height: 100vmax;
-        top: -50vmax;
-        left: -50vmax;
-        opacity: 0.4;
+        border-radius: 50%;
         filter: blur(80px);
-        z-index: -1;
-        animation: mesh-morph 20s linear infinite;
-        will-change: transform;
+        pointer-events: none;
       }
 
       .background-overlay::before {
-        background: radial-gradient(
-          circle,
-          rgba(99, 102, 241, 0.3) 0%,
-          transparent 70%
-        );
+        width: 600px;
+        height: 600px;
+        top: -150px;
+        right: -150px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, transparent 70%);
       }
 
       .background-overlay::after {
-        background: radial-gradient(
-          circle,
-          rgba(199, 210, 254, 0.3) 0%,
-          transparent 70%
-        );
-        animation-delay: -10s;
-        animation-duration: 30s;
+        width: 500px;
+        height: 500px;
+        bottom: -100px;
+        left: -100px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
       }
 
       .dark .background-overlay::before {
-        background: radial-gradient(
-          circle,
-          rgba(99, 102, 241, 0.15) 0%,
-          transparent 70%
-        );
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
       }
 
       .dark .background-overlay::after {
-        background: radial-gradient(
-          circle,
-          rgba(74, 222, 128, 0.05) 0%,
-          transparent 70%
-        );
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
       }
 
-      @keyframes mesh-morph {
-        0% {
-          transform: translate(0, 0) rotate(0deg) scale(1);
-        }
-        33% {
-          transform: translate(20%, 10%) rotate(120deg) scale(1.1);
-        }
-        66% {
-          transform: translate(-10%, 20%) rotate(240deg) scale(0.9);
-        }
-        100% {
-          transform: translate(0, 0) rotate(360deg) scale(1);
-        }
-      }
 
       /* Scroll Reveal */
       .reveal {

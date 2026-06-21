@@ -123,49 +123,6 @@ const t = useTranslations(lang);
 </article>
 
 <script>
-  // 3D Tilt Effect
-  const cards = document.querySelectorAll(".project-item");
-
-  cards.forEach((card) => {
-    const el = card as HTMLElement;
-    let frameId: number | null = null;
-
-    const handleMove = (e: MouseEvent) => {
-      if (frameId) cancelAnimationFrame(frameId);
-
-      frameId = requestAnimationFrame(() => {
-        const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = ((y - centerY) / centerY) * -5; // Max 5 deg
-        const rotateY = ((x - centerX) / centerX) * 5;
-
-        el.style.setProperty("--rotate-x", `${rotateX}deg`);
-        el.style.setProperty("--rotate-y", `${rotateY}deg`);
-        el.style.setProperty("--glare-opacity", "0.1");
-        el.style.setProperty("--glare-x", `${(x / rect.width) * 100}%`);
-        el.style.setProperty("--glare-y", `${(y / rect.height) * 100}%`);
-      });
-    };
-
-    const handleLeave = () => {
-      if (frameId) cancelAnimationFrame(frameId);
-      el.style.setProperty("--rotate-x", "0deg");
-      el.style.setProperty("--rotate-y", "0deg");
-      el.style.setProperty("--glare-opacity", "0");
-    };
-
-    // Solo activar en dispositivos con puntero (no táctiles) para rendimiento
-    if (window.matchMedia("(pointer: fine)").matches) {
-      el.addEventListener("mousemove", handleMove);
-      el.addEventListener("mouseleave", handleLeave);
-    }
-  });
-
   // Lightbox Trigger Logic
   const triggers = document.querySelectorAll("[data-lightbox-trigger]");
   triggers.forEach((trigger) => {
@@ -182,27 +139,3 @@ const t = useTranslations(lang);
   });
 </script>
 
-<style>
-  .project-item {
-    transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
-      rotateY(var(--rotate-y, 0deg));
-    transition:
-      transform 0.1s ease-out,
-      box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .project-item::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(
-      circle at var(--glare-x, 0%) var(--glare-y, 0%),
-      rgba(255, 255, 255, var(--glare-opacity, 0)) 0%,
-      transparent 70%
-    );
-    z-index: 10;
-  }
-</style>

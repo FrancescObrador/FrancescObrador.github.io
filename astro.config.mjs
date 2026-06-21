@@ -6,7 +6,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://francescobrador.com",
+  site: "https://francescobrador.dev",
   integrations: [tailwind(), icon(), sitemap()],
   i18n: {
     defaultLocale: "es",

@@ -2,7 +2,6 @@
 import { Icon } from "astro-icon/components";
 import SectionHeading from "./SectionHeading.astro";
 import Card from "./shared/Card.astro";
-import GradientText from "./shared/GradientText.astro";
 import IconBadge from "./shared/IconBadge.astro";
 import Skills from "./Skills.astro";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
@@ -13,23 +12,14 @@ const t = useTranslations(lang);
 
 <article class="grid gap-8 text-slate-700 dark:text-slate-300">
   <div class="space-y-6 reveal">
-    <SectionHeading title={t("about.title")} subtitle={t("about.subtitle")}>
-      <GradientText from="from-blue-400" to="to-blue-600" class="text-3xl">
-        {t("about.title")}
-      </GradientText>
-      <p class="text-lg font-semibold text-slate-700 dark:text-slate-300">
-        {t("about.subtitle")}
-      </p>
-    </SectionHeading>
+    <SectionHeading title={t("about.title")} subtitle={t("about.subtitle")} />
 
     <div class="space-y-8">
       <div class="reveal space-y-8">
         <div
           class="p-6 rounded-3xl bg-slate-100/40 dark:bg-slate-800/20 border border-slate-200/50 dark:border-slate-700/30"
         >
-          <p class="text-pretty">
-            {t("about.description")}
-          </p>
+          <p class="text-pretty" set:html={t("about.description")} />
         </div>
 
         <div class="reveal">
@@ -92,6 +82,17 @@ const t = useTranslations(lang);
       </div>
     </div>
   </div>
+
+  <script>
+    const FIXED_MONTHS = 25;
+    const nttStart = new Date("2025-04-01");
+    const now = new Date();
+    const nttMonths = (now.getFullYear() - nttStart.getFullYear()) * 12 + (now.getMonth() - nttStart.getMonth());
+    const years = Math.floor((FIXED_MONTHS + nttMonths) / 12);
+    document.querySelectorAll("[data-exp-years]").forEach((el) => {
+      el.textContent = String(years);
+    });
+  </script>
 
   <style>
     .cta-button {

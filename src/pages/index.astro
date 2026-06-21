@@ -6,7 +6,6 @@ import SectionContainer from "../components/SectionContainer.astro";
 import Hero from "../components/Hero.astro";
 import AboutMe from "../components/AboutMe.astro";
 import UnifiedProjects from "../components/UnifiedProjects.astro";
-import SectionDivider from "../components/shared/SectionDivider.astro";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
@@ -37,11 +36,6 @@ const t = useTranslations(lang);
         </div>
       </SectionContainer>
 
-      <SectionDivider
-        variant="curve"
-        className="text-slate-100 dark:text-slate-800/30"
-      />
-
       <!-- Projects -->
       <SectionContainer id="projects">
         <div class="space-y-12">
@@ -49,10 +43,10 @@ const t = useTranslations(lang);
             <h2 class="flex items-center mb-8 text-3xl font-bold gap-x-3">
               <Icon
                 name="heroicons:code-bracket"
-                class="w-6 h-6 text-purple-500"
+                class="w-6 h-6 text-blue-500"
               />
               <span
-                class="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent"
+                class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent"
               >
                 {t("section.projects")}
               </span>
@@ -65,22 +59,16 @@ const t = useTranslations(lang);
         </div>
       </SectionContainer>
 
-      <SectionDivider
-        variant="wave"
-        className="text-slate-100 dark:text-slate-800/30"
-        flip={true}
-      />
-
       <!-- About Me -->
       <SectionContainer id="about-me">
         <div class="reveal">
           <h2 class="flex items-center mb-8 text-3xl font-bold gap-x-3">
             <Icon
               name="heroicons:user-circle"
-              class="w-6 h-6 text-yellow-500"
+              class="w-6 h-6 text-blue-500"
             />
             <span
-              class="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent"
+              class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent"
             >
               {t("section.about")}
             </span>

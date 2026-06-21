@@ -2,10 +2,10 @@
 title: "Web Developer"
 company: "NTT Data"
 date: "2025 - Present"
+startDate: "2025-04-01"
 employmentType: "Jornada completa"
 location: "Remoto"
 technologies: ['csharp', 'aspnet', 'dotnet', 'sqlserver', 'javascript', 'bootstrap']
 ---
-Optimización y mantenimiento evolutivo de ecosistemas web robustos basados en <strong>ASP.NET MVC</strong>, asegurando alta disponibilidad y escalabilidad.
-Resolución proactiva de incidentes técnicos críticos y mejora continua del rendimiento en entornos de producción.
-Colaboración estratégica en equipos ágiles bajo metodología <strong>Scrum</strong>, gestionando el ciclo de vida completo del software.
+Desarrollo y evolución de 4 aplicaciones web clínicas sobre <strong>ASP.NET MVC</strong> en el sector sanitario.
+Resolución de incidencias y trabajo de fiabilidad en sistemas de alta disponibilidad en producción con <strong>C#</strong>, <strong>SQL Server</strong> y <strong>JavaScript</strong>, bajo metodología <strong>Scrum</strong>.

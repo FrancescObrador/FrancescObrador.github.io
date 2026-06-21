@@ -78,7 +78,7 @@ const filterTags = [
                 const techMatch = !currentTech || tags.includes(currentTech);
 
                 if (categoryMatch && techMatch) {
-                    (project as HTMLElement).style.display = "block";
+                    (project as HTMLElement).style.display = "";
                     // Trigger reveal again for new visible items
                     project.classList.add("visible");
                 } else {

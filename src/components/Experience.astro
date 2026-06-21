@@ -16,7 +16,7 @@ const EXPERIENCE = experienceEntries
     technologies: (entry.data.technologies ?? []) as (keyof typeof TAGS)[],
     description: entry.body.split("\n").filter((line) => line.trim() !== ""),
   }))
-  .reverse();
+  .sort((a, b) => parseInt(b.date) - parseInt(a.date));
 ---
 
 <ol class="relative mt-16">
