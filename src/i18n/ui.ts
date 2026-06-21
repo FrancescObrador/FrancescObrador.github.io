@@ -112,7 +112,7 @@ export const ui = {
         'nav.toggle_theme': 'Canviar tema',
         'nav.language': 'Idioma',
         'nav.back_to_top': 'Tornar amunt',
-        'hero.title': 'Hola, sóc Francesc',
+        'hero.title': 'Hola, sóc en Francesc',
         'hero.role': 'Desenvolupador Full-stack',
         'hero.specializing': 'especialitzat en',
         'hero.webdev': 'Desenvolupament Web',
